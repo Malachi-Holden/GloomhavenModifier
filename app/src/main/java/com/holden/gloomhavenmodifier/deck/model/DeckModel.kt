@@ -1,5 +1,6 @@
 package com.holden.gloomhavenmodifier.deck.model
 
+import com.holden.gloomhavenmodifier.deck.BaseCard
 import com.holden.gloomhavenmodifier.util.added
 import com.holden.gloomhavenmodifier.util.shuffled
 
@@ -20,7 +21,7 @@ class DeckModel(val cards: List<CardModel>, val position: Int = 0, val needsShuf
         DeckModel(cards, position + 1, needsShuffle || cards[position].reshuffle == true)
     } else {
         cards.shuffled().let { shuffledCards->
-            DeckModel(shuffledCards, 1, shuffledCards[1].reshuffle)
+            DeckModel(shuffledCards, 1, shuffledCards[0].reshuffle)
         }
     }
 
