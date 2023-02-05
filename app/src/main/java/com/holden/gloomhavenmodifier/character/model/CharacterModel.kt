@@ -12,7 +12,7 @@ class CharacterModel(
     val title: String,
     val specialtyCards: List<CardModel>,
     val perks: List<Perk>,
-    @Transient val appliedPerks: List<Perk> = listOf()
+    val appliedPerks: List<Perk> = listOf()
 ) {
     fun buildDeck() = DeckModel(
         cards = getDefaultDeck().cards.applyPerks(

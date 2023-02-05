@@ -7,7 +7,7 @@ import kotlinx.serialization.json.Json
 
 val LOCAL_CHARACTER_FILE = "LocalCharacters.json"
 
-class LocalCharacterRepo(val assets: AssetManager): CharacterRepository {
+class BuildInCharacterRepo(val assets: AssetManager): CharacterRepository {
 
     @OptIn(ExperimentalSerializationApi::class)
     fun getLocalCharacterFiles(): List<String>{

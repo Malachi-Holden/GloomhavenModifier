@@ -2,7 +2,7 @@ package com.holden.gloomhavenmodifier
 
 import org.junit.Test
 
-class LocalCharacterRepoTest {
+class BuildInCharacterRepoTest {
     @Test
     fun testGetLocalCharacterFiles(){
 

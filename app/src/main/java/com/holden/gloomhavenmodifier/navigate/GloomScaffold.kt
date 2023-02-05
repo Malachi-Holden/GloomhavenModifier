@@ -13,7 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 
 @Composable
-fun GloomScaffold(){
+fun GloomScaffold() {
     val navController = rememberNavController()
     val scope = rememberCoroutineScope()
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -24,7 +24,7 @@ fun GloomScaffold(){
                 title = {
                     Text(text = currentDestination?.route ?: "Deck")
                 },
-                navigationIcon = when(currentDestination?.route){
+                navigationIcon = when (currentDestination?.route) {
                     GloomDestination.Deck.name -> null
                     GloomDestination.Character.name,
                     GloomDestination.ChooseCharacter.name -> {
@@ -35,12 +35,22 @@ fun GloomScaffold(){
                         }
                     }
                     else -> null
-                }
-                ,
+                },
                 actions = {
-                    if (currentDestination?.route == GloomDestination.Deck.name) {
-                        Button(onClick = { navController.navigate(GloomDestination.ChooseCharacter.name) }) {
+                    when (currentDestination?.route) {
+                        GloomDestination.Deck.name -> Button(onClick = {
+                            navController.navigate(
+                                GloomDestination.Character.name
+                            )
+                        }) {
                             Text(text = "Edit Character")
+                        }
+                        GloomDestination.Character.name -> Button(onClick = {
+                            navController.navigate(
+                                GloomDestination.ChooseCharacter.name
+                            )
+                        }) {
+                            Text(text = "New Character Class")
                         }
                     }
                 }

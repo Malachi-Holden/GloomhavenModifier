@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
-import com.holden.gloomhavenmodifier.character.LocalCharacterRepo
+import com.holden.gloomhavenmodifier.character.BuildInCharacterRepo
 import com.holden.gloomhavenmodifier.character.model.CharacterModel
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.AlertDialog
@@ -29,7 +29,7 @@ fun ChooseCharacter(onChosen: (CharacterModel)->Unit){
     }
     val assets = LocalContext.current.assets
     LaunchedEffect(Unit){
-        characterList = LocalCharacterRepo(assets).getCharacters()
+        characterList = BuildInCharacterRepo(assets).getCharacters()
     }
     val characters = characterList
     Box {
