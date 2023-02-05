@@ -99,7 +99,7 @@ fun DeckPreview() {
     Deck(
         DeckModel(
                 listOf(
-                CardModel("+ 1", R.drawable.zero, false)
+                CardModel("+ 1", "zero", null, false)
             ),
             1
         )
