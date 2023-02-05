@@ -22,5 +22,12 @@ class CharacterModel(
         )
     )
 
+    companion object{
+        val NoClass = CharacterModel(
+            "No Class",
+            listOf(),
+            listOf()
+        )
+    }
 }
 

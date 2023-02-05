@@ -24,18 +24,22 @@ fun GloomScaffold(){
                 title = {
                     Text(text = currentDestination?.route ?: "Deck")
                 },
-                navigationIcon = if (currentDestination?.route == GloomDestination.Deck.name) {
-                    null
-                } else {
-                    {
-                        IconButton(onClick = { scope.launch { navController.popBackStack() } }) {
-                            Icon(Icons.Default.ArrowBack, "back")
+                navigationIcon = when(currentDestination?.route){
+                    GloomDestination.Deck.name -> null
+                    GloomDestination.Character.name,
+                    GloomDestination.ChooseCharacter.name -> {
+                        {
+                            IconButton(onClick = { scope.launch { navController.popBackStack() } }) {
+                                Icon(Icons.Default.ArrowBack, "back")
+                            }
                         }
                     }
-                },
+                    else -> null
+                }
+                ,
                 actions = {
                     if (currentDestination?.route == GloomDestination.Deck.name) {
-                        Button(onClick = { navController.navigate(GloomDestination.Character.name) }) {
+                        Button(onClick = { navController.navigate(GloomDestination.ChooseCharacter.name) }) {
                             Text(text = "Edit Character")
                         }
                     }

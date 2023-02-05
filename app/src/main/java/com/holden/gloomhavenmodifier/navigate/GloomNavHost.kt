@@ -7,12 +7,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.holden.gloomhavenmodifier.character.ui.CharacterList
+import com.holden.gloomhavenmodifier.chooseCharacter.ui.ChooseCharacter
 import com.holden.gloomhavenmodifier.deck.getLocalDeck
 import com.holden.gloomhavenmodifier.deck.ui.Deck
 
 enum class GloomDestination {
     Deck,
-    Character
+    Character,
+    ChooseCharacter
 }
 
 @Composable
@@ -30,5 +32,10 @@ fun GloomNavHost(
         }
         composable(GloomDestination.Character.name) {
             CharacterList()
+        }
+        composable(GloomDestination.ChooseCharacter.name){
+            ChooseCharacter(onChosen = {
+                navController.popBackStack()
+            })
         }
     }

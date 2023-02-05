@@ -1,6 +1,5 @@
 package com.holden.gloomhavenmodifier.character
 
-import android.content.Context
 import android.content.res.AssetManager
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
