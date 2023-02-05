@@ -3,6 +3,7 @@ package com.holden.gloomhavenmodifier.deck.model
 import com.holden.gloomhavenmodifier.util.added
 import com.holden.gloomhavenmodifier.util.shuffled
 
+@kotlinx.serialization.Serializable
 class DeckModel(val cards: List<CardModel>, val position: Int = 0, val needsShuffle: Boolean = false) {
 
     fun drawn() = position

@@ -1,8 +1,19 @@
 package com.holden.gloomhavenmodifier.deck
 
-import com.holden.gloomhavenmodifier.R
+import android.content.Context
 import com.holden.gloomhavenmodifier.deck.model.CardModel
 import com.holden.gloomhavenmodifier.deck.model.DeckModel
+import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
+import com.holden.gloomhavenmodifier.getLocalGloomObject
+import com.holden.gloomhavenmodifier.saveLocalGloomObject
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import java.io.FileNotFoundException
+
+val GLOOM_CHARACTER_FILE = "GLOOM_CHARACTER_FILE"
+val GLOOM_DECK_FILE = "GLOOM_DECK_FILE"
 
 enum class BaseCard(val card: CardModel){
     BackOfCard(CardModel("back of card", "back", null, false)),
@@ -15,8 +26,15 @@ enum class BaseCard(val card: CardModel){
     Crit(CardModel("x 2", "crit", null, true))
 }
 
-//use room instead
-fun getLocalDeck() = getDefaultDeck()
+
+fun saveLocalDeck(context: Context, deck: DeckModel){
+    saveLocalGloomObject(context, deck, GLOOM_DECK_FILE)
+}
+
+fun getLocalDeck(context: Context): DeckModel{
+    return getLocalGloomObject<DeckModel>(context, GLOOM_DECK_FILE) ?: CharacterModel.NoClass.buildDeck()
+}
+
 
 fun getDefaultDeck() = DeckModel(buildList {
     repeat(6){
