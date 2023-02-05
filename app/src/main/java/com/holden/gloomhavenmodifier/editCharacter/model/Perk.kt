@@ -1,8 +1,6 @@
-package com.holden.gloomhavenmodifier.character.model
+package com.holden.gloomhavenmodifier.editCharacter.model
 
 import com.holden.gloomhavenmodifier.deck.model.CardModel
-import com.holden.gloomhavenmodifier.util.mutated
-import com.holden.gloomhavenmodifier.util.removeIf
 import kotlinx.serialization.Serializable
 
 @Serializable

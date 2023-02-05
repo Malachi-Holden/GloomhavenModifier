@@ -7,8 +7,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
-import com.holden.gloomhavenmodifier.character.BuildInCharacterRepo
-import com.holden.gloomhavenmodifier.character.model.CharacterModel
+import com.holden.gloomhavenmodifier.editCharacter.BuiltInCharacterRepo
+import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
@@ -29,7 +29,7 @@ fun ChooseCharacter(onChosen: (CharacterModel)->Unit){
     }
     val assets = LocalContext.current.assets
     LaunchedEffect(Unit){
-        characterList = BuildInCharacterRepo(assets).getCharacters()
+        characterList = BuiltInCharacterRepo(assets).getCharacters()
     }
     val characters = characterList
     Box {
@@ -68,7 +68,7 @@ fun ChooseCharacter(onChosen: (CharacterModel)->Unit){
                     Text(text = "Replace current character?")
                 },
                 text = {
-                    Text(text = "This will override any saved progress on your current character")
+                    Text(text = "This will override any saved progress on your current character and will reset the deck to unshuffled")
                 }
             )
         }

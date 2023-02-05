@@ -19,7 +19,7 @@ enum class BaseCard(val card: CardModel){
 fun getLocalDeck() = getDefaultDeck()
 
 fun getDefaultDeck() = DeckModel(buildList {
-    repeat(5){
+    repeat(6){
         add(BaseCard.Zero.card)
     }
     repeat(5){

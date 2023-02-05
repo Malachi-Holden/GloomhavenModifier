@@ -1,4 +1,4 @@
-package com.holden.gloomhavenmodifier.character.model
+package com.holden.gloomhavenmodifier.editCharacter.model
 
 suspend fun getLocalCharacter()
     = CharacterModel.NoClass // only if there is no local character

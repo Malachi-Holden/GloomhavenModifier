@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -23,10 +24,8 @@ import com.holden.gloomhavenmodifier.R
 
 @Composable
 fun Deck(
-    initialDeck: DeckModel,
-    viewModel: DeckViewModel = viewModel(factory = DeckViewModel.Factory(initialDeck))
+    viewModel: DeckViewModel
 ) {
-
     val deck by viewModel.state.collectAsState()
     val cardModifier = Modifier
         .aspectRatio(CARD_ASPECT_RATIO)
@@ -93,15 +92,15 @@ fun CardSlot(
     }
 }
 
-@Composable
-@Preview
-fun DeckPreview() {
-    Deck(
-        DeckModel(
-                listOf(
-                CardModel("+ 1", "zero", null, false)
-            ),
-            1
-        )
-    )
-}
+//@Composable
+//@Preview
+//fun DeckPreview() {
+//    Deck(
+//        DeckModel(
+//                listOf(
+//                CardModel("+ 1", "zero", null, false)
+//            ),
+//            1
+//        )
+//    )
+//}

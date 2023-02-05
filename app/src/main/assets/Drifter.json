@@ -16,17 +16,17 @@
   ],
   "perks": [
     {
-      "description": "replace -1 with +1",
+      "description": "replace one -1 with one +1 card",
       "add": ["+ 1"],
       "remove": ["- 1"]
     },
     {
-      "description": "replace -2 with +0",
+      "description": "replace one -2 with one +0 card",
       "add": ["+ 0"],
       "remove": ["- 2"]
     },
     {
-      "description": "replace 2 +0 with 2 rolling pierce 3",
+      "description": "replace two +0 with 2 rolling pierce 3 cards",
       "add": ["rolling push 2", "rolling push 2"],
       "remove": ["+ 0", "+ 0"]
     }

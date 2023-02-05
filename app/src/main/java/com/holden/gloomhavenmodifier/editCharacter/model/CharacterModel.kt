@@ -1,14 +1,13 @@
-package com.holden.gloomhavenmodifier.character.model
+package com.holden.gloomhavenmodifier.editCharacter.model
 
 import com.holden.gloomhavenmodifier.deck.BaseCard
 import com.holden.gloomhavenmodifier.deck.getDefaultDeck
 import com.holden.gloomhavenmodifier.deck.model.CardModel
 import com.holden.gloomhavenmodifier.deck.model.DeckModel
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 @Serializable
-class CharacterModel(
+data class CharacterModel(
     val title: String,
     val specialtyCards: List<CardModel>,
     val perks: List<Perk>,

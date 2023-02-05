@@ -1,4 +1,4 @@
-package com.holden.gloomhavenmodifier.character
+package com.holden.gloomhavenmodifier.editCharacter
 
 import android.content.res.AssetManager
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -7,7 +7,7 @@ import kotlinx.serialization.json.Json
 
 val LOCAL_CHARACTER_FILE = "LocalCharacters.json"
 
-class BuildInCharacterRepo(val assets: AssetManager): CharacterRepository {
+class BuiltInCharacterRepo(val assets: AssetManager): CharacterRepository {
 
     @OptIn(ExperimentalSerializationApi::class)
     fun getLocalCharacterFiles(): List<String>{

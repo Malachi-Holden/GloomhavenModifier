@@ -1,11 +1,9 @@
-package com.holden.gloomhavenmodifier.character
+package com.holden.gloomhavenmodifier.editCharacter
 
-import com.holden.gloomhavenmodifier.character.model.CharacterModel
+import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import org.json.JSONArray
-import org.json.JSONObject
 
 /**
  * Resource for fetching data about a character from a data source (usually remote)

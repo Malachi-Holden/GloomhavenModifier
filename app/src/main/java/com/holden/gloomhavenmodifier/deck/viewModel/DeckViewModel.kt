@@ -6,9 +6,13 @@ import com.holden.gloomhavenmodifier.deck.model.DeckModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class DeckViewModel(deckModel: DeckModel): ViewModel() {
-    private val _state = MutableStateFlow(deckModel)
+class DeckViewModel(deck: DeckModel): ViewModel() {
+    private val _state = MutableStateFlow(deck)
     val state = _state.asStateFlow()
+
+    fun updateDeck(deck: DeckModel){
+        _state.value = deck
+    }
 
     fun draw(){
         _state.value = state.value.draw()
