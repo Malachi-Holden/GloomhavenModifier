@@ -1,6 +1,5 @@
 package com.holden.gloomhavenmodifier.deck.model
 
-import com.holden.gloomhavenmodifier.deck.BaseCard
 import com.holden.gloomhavenmodifier.util.added
 import com.holden.gloomhavenmodifier.util.shuffled
 
