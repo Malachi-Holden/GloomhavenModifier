@@ -1,9 +1,13 @@
 package com.holden.gloomhavenmodifier
 
 import com.holden.gloomhavenmodifier.editCharacter.CharacterRepository
+import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import org.junit.Before
 import org.junit.Test
 
@@ -40,7 +44,14 @@ class CharacterRepoTest {
 
 
 class MockCharacterRepo : CharacterRepository {
-    override suspend fun getCharacterJson(): List<String> = listOf(
+    @OptIn(ExperimentalSerializationApi::class)
+    override suspend fun getCharacters(): List<CharacterModel>
+        = buildList {
+            for (characterString in getCharacterJson()){
+                add(Json.decodeFromString(characterString))
+            }
+        }
+    fun getCharacterJson(): List<String> = listOf(
         """
         {
           "title": "Drifter (test)",

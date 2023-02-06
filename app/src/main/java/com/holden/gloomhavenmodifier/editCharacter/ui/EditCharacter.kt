@@ -1,9 +1,6 @@
 package com.holden.gloomhavenmodifier.editCharacter.ui
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.AlertDialog
@@ -14,9 +11,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import com.holden.gloomhavenmodifier.editCharacter.model.Perk
 import com.holden.gloomhavenmodifier.util.toInt
+import com.holden.gloomhavenmodifier.util.ui.CustomCheckBox
 
 @Composable
 fun EditCharacter(character: CharacterModel, onSave: (CharacterModel)->Unit) {
@@ -86,13 +86,30 @@ fun EditCharacter(character: CharacterModel, onSave: (CharacterModel)->Unit) {
 
 @Composable
 fun PerkCheckRow(perk: Perk, checked: Int, onCheckChanged: (Int)->Unit){
-    Row {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         repeat(perk.count){ i->
-            Checkbox(
+            CustomCheckBox(
+                modifier = Modifier.size(30.dp),
                 checked = i < checked,
-                onCheckedChange = { onCheckChanged(checked + 2 * it.toInt() - 1) })
+                onCheckedChange = { onCheckChanged(checked + 2 * it.toInt() - 1) }
+            )
         }
-
-        Text(text = perk.description)
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = perk.description
+        )
     }
+}
+
+@Preview
+@Composable
+fun PerkCheckRowPreview(){
+    var checked by remember {
+        mutableStateOf(2)
+    }
+    PerkCheckRow(perk = Perk("", 3, listOf(), listOf()), checked = checked, onCheckChanged = { checked = it })
 }
