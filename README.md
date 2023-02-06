@@ -1,6 +1,6 @@
 # Attack modifier deck helper app
 
-If you haven't played the great board game (Gloomhaven)[https://boardgamegeek.com/boardgame/174430/gloomhaven] then go buy it, play it, and we'll pick up from there.
+If you haven't played the great board game [Gloomhaven](https://boardgamegeek.com/boardgame/174430/gloomhaven) then go buy it, play it, and we'll pick up from there.
 
 If you've played it, you know how much of a headache it is to shuffle your attack modifiers, to add and remove perks. What if you didn't shuffle fairly? Is that why you got the null 3 times in a row???
 
