@@ -1,9 +1,6 @@
 package com.holden.gloomhavenmodifier.deck.model
 
-import com.holden.gloomhavenmodifier.deck.BaseCard
-import com.holden.gloomhavenmodifier.deck.isBless
-import com.holden.gloomhavenmodifier.deck.isCurse
-import com.holden.gloomhavenmodifier.deck.oneTimeUse
+import com.holden.gloomhavenmodifier.deck.*
 import com.holden.gloomhavenmodifier.util.added
 import com.holden.gloomhavenmodifier.util.removedFirst
 import com.holden.gloomhavenmodifier.util.toInt
@@ -24,7 +21,8 @@ data class DeckModel(
     val position: Int = 0,
     val needsShuffle: Boolean = false,
     val curses: Int = 0,
-    val blesses: Int = 0
+    val blesses: Int = 0,
+    val bonusMinuses: Int = 0
 ) {
 
     fun drawn() = position
@@ -68,7 +66,23 @@ data class DeckModel(
 
     fun insertBless() = insertUnplayed(BaseCard.Bless.card).copy(blesses = blesses + 1)
 
+    fun insertScenarioMinus()
+        = insertUnplayed(BaseCard.BonusMinus.card)
+        .copy(bonusMinuses = bonusMinuses + 1)
+
     fun removeCurse() = removeUnplayed(BaseCard.Curse.card).copy(curses = max(0, curses - 1))
 
     fun removeBless() = removeUnplayed(BaseCard.Bless.card).copy(blesses = max(0, blesses - 1))
+
+    fun removeScenarioMinus()
+        = removeUnplayed(BaseCard.BonusMinus.card)
+        .copy(bonusMinuses = max(0, bonusMinuses - 1))
+
+    /**
+     * Removes all scenario-specific cards. Leaves only cards from perks and base cards
+     */
+    fun cleanDeck() = DeckModel(
+        cards = cards.filter { !it.isExtraCard() }.shuffled()
+    )
+
 }

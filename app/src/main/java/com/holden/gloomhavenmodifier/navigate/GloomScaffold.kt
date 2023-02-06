@@ -1,15 +1,20 @@
 package com.holden.gloomhavenmodifier.navigate
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.holden.gloomhavenmodifier.bonusActions.BonusActions
+import com.holden.gloomhavenmodifier.deck.getLocalDeck
+import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -18,6 +23,9 @@ fun GloomScaffold() {
     val scope = rememberCoroutineScope()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry?.destination
+    var showBonusActions by remember {
+        mutableStateOf(false)
+    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -25,7 +33,13 @@ fun GloomScaffold() {
                     Text(text = currentDestination?.route ?: "Deck")
                 },
                 navigationIcon = when (currentDestination?.route) {
-                    GloomDestination.Deck.name -> null
+                    GloomDestination.Deck.name -> {
+                        {
+                            IconButton(onClick = { showBonusActions = true }) {
+                                Icon(Icons.Default.Menu, "bonus actions")
+                            }
+                        }
+                    }
                     GloomDestination.Character.name,
                     GloomDestination.ChooseCharacter.name -> {
                         {
@@ -57,9 +71,23 @@ fun GloomScaffold() {
             )
         },
     ) {
-        GloomNavHost(
-            modifier = Modifier.fillMaxSize(),
-            navController = navController
-        )
+        val context = LocalContext.current
+        val deckViewModel: DeckViewModel
+            = viewModel(factory = DeckViewModel.Factory(
+                getLocalDeck(context)
+        ))
+        Box(modifier = Modifier.fillMaxSize()) {
+            GloomNavHost(
+                deckViewModel = deckViewModel,
+                modifier = Modifier.fillMaxSize(),
+                navController = navController
+            )
+            if(showBonusActions) {
+                BonusActions(
+                    viewModel = deckViewModel,
+                    onClose = { showBonusActions = false }
+                )
+            }
+        }
     }
 }
