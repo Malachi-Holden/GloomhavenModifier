@@ -1,6 +1,7 @@
 package com.holden.gloomhavenmodifier.deck
 
 import android.content.Context
+import com.holden.gloomhavenmodifier.R
 import com.holden.gloomhavenmodifier.deck.model.CardModel
 import com.holden.gloomhavenmodifier.deck.model.DeckModel
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
@@ -20,14 +21,21 @@ enum class BaseCard(val card: CardModel){
     Miss(CardModel("Ø", "miss", null, true)),
     Crit(CardModel("x 2", "crit", null, true)),
     Curse(CardModel("curse", "curse", null, false)),
-    Bless(CardModel("bless", "bless", null, false))
+    Bless(CardModel("bless", "bless", null, false)),
+    BonusMinus(CardModel("*- 1", "scenario_effect_minus_1", null, false))
 }
+
+val x = R.drawable.scenario_effect_minus_1
 
 fun CardModel.isBless() = (description == BaseCard.Bless.card.description)
 
 fun CardModel.isCurse() = (description == BaseCard.Curse.card.description)
 
+fun CardModel.isBonusMinus() = description == BaseCard.BonusMinus.card.description
+
 fun CardModel.oneTimeUse() = isCurse() || isBless()
+
+fun CardModel.isExtraCard() = isCurse() || isBless() || isBonusMinus()
 
 
 fun saveLocalDeck(context: Context, deck: DeckModel){

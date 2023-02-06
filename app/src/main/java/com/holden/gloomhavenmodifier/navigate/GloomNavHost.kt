@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.holden.gloomhavenmodifier.bonusActions.BonusActions
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import com.holden.gloomhavenmodifier.editCharacter.ui.EditCharacter
 import com.holden.gloomhavenmodifier.chooseCharacter.ui.ChooseCharacter
@@ -28,11 +29,13 @@ import okhttp3.internal.notify
 enum class GloomDestination {
     Deck,
     Character,
-    ChooseCharacter
+    ChooseCharacter,
+    BonusActions
 }
 
 @Composable
 fun GloomNavHost(
+    deckViewModel: DeckViewModel,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
@@ -40,10 +43,6 @@ fun GloomNavHost(
     var currentCharacter by remember {
         mutableStateOf(getLocalCharacter(context))
     }
-    val deckViewModel: DeckViewModel
-        = viewModel(factory = DeckViewModel.Factory(
-            getLocalDeck(context)
-        ))
     LaunchedEffect(Unit){
         deckViewModel.state.onEach { saveLocalDeck(context, it) }
             .launchIn(this)

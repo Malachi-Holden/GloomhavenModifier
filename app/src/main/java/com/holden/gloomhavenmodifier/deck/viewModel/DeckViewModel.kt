@@ -30,12 +30,24 @@ class DeckViewModel(deck: DeckModel): ViewModel() {
         _state.value = state.value.insertBless()
     }
 
+    fun cleanDeck(){
+        _state.value = state.value.cleanDeck()
+    }
+
+    fun insertBonusMinus(){
+        _state.value = state.value.insertScenarioMinus()
+    }
+
     fun removeCurse(){
         _state.value = state.value.removeCurse()
     }
 
     fun removeBless(){
         _state.value = state.value.removeBless()
+    }
+
+    fun removeBonusMinus(){
+        _state.value = state.value.removeScenarioMinus()
     }
 
     class Factory(val deckModel: DeckModel): ViewModelProvider.Factory{
