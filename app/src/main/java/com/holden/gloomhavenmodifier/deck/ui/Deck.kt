@@ -1,5 +1,6 @@
 package com.holden.gloomhavenmodifier.deck.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
@@ -21,6 +22,9 @@ fun Deck(
     viewModel: DeckViewModel
 ) {
     val deck by viewModel.state.collectAsState()
+    var showCardHistory by remember {
+        mutableStateOf(false)
+    }
     Box {
         Column(
             modifier = Modifier
@@ -43,7 +47,9 @@ fun Deck(
 
             Text(text = "drawn: ${deck.drawn()}")
             deck.mostRecentlyPlayed()?.let {
-                Card(modifier = cardModifier, card = it)
+                Card(
+                    modifier = cardModifier.clickable { showCardHistory = true  },
+                    card = it)
             }
             if (deck.mostRecentlyPlayed() == null) {
                 CardSlot(modifier = cardModifier, text = "empty discard")
@@ -74,6 +80,9 @@ fun Deck(
                 removeBless = { viewModel.removeBless() },
                 removeCurse = { viewModel.removeCurse() }
             )
+        }
+        if (showCardHistory){
+            CardHistory(onClose = { showCardHistory = false }, deck = deck)
         }
     }
 }
