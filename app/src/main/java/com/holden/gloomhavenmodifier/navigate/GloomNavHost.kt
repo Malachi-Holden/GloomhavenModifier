@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import com.holden.gloomhavenmodifier.editCharacter.ui.EditCharacter
 import com.holden.gloomhavenmodifier.chooseCharacter.ui.ChooseCharacter
+import com.holden.gloomhavenmodifier.deck.getDefaultDeck
 import com.holden.gloomhavenmodifier.deck.getLocalDeck
 import com.holden.gloomhavenmodifier.deck.saveLocalDeck
 import com.holden.gloomhavenmodifier.deck.ui.Deck
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.subscribe
+import okhttp3.internal.notify
 
 enum class GloomDestination {
     Deck,
