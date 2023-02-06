@@ -27,7 +27,7 @@
     },
     {
       "description": "replace two +0 with 2 rolling pierce 3 cards",
-      "add": ["rolling push 2", "rolling push 2"],
+      "add": ["rolling pierce 3", "rolling pierce 3"],
       "remove": ["+ 0", "+ 0"]
     }
   ]
