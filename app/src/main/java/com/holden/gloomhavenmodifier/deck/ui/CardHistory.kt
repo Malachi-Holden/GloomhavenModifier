@@ -4,10 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
@@ -26,13 +25,15 @@ fun CardHistory(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.Black.copy(alpha = 0.5f))
-            .clickable { onClose() }
+            .background(color = MaterialTheme.colors.background.copy(alpha = 0.5f))
     ){
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .clickable { onClose() })
         Column(
             modifier = Modifier
                 .fillMaxSize(0.8f)
-            .background(Color.White.copy(alpha = .8f))
+                .background(MaterialTheme.colors.background.copy(alpha = 0.8f))
                 .align(Alignment.Center)
         ) {
             Row(
