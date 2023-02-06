@@ -10,7 +10,7 @@
     {
       "description": "Drifter: +0",
       "resourceType": "local",
-      "imageRes": "drifter_plus0",
+      "imageRes": "drifter_zero",
       "reshuffle": false
     },
     {
@@ -71,13 +71,7 @@
     },
     {
       "description": "Replace two (+0) cards with two (Rolling Pierce 3) cards",
-      "count":1,
-      "add": ["Drifter: rolling pierce(3)", "Drifter: rolling pierce(3)"],
-      "remove": ["+ 0", "+ 0"]
-    },
-    {
-      "description": "Replace two (+0) cards with two (Rolling Pierce 3) cards",
-      "count":1,
+      "count":2,
       "add": ["Drifter: rolling pierce(3)", "Drifter: rolling pierce(3)"],
       "remove": ["+ 0", "+ 0"]
     },
