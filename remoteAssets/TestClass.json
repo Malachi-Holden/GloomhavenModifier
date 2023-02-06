@@ -1,0 +1,34 @@
+{
+  "title": "Drifter (test)",
+  "specialtyCards": [
+    {
+      "description": "rolling pierce 3",
+      "resourceType": "local",
+      "imageRes": "rolling_pierce_3",
+      "reshuffle": false
+    },
+    {
+      "description": "rolling push 2",
+      "resourceType": "local",
+      "imageRes": "rolling_push_2",
+      "reshuffle": false
+    }
+  ],
+  "perks": [
+    {
+      "description": "replace one -1 with one +1 card",
+      "add": ["+ 1"],
+      "remove": ["- 1"]
+    },
+    {
+      "description": "replace one -2 with one +0 card",
+      "add": ["+ 0"],
+      "remove": ["- 2"]
+    },
+    {
+      "description": "replace two +0 with 2 rolling pierce 3 cards",
+      "add": ["rolling push 2", "rolling push 2"],
+      "remove": ["+ 0", "+ 0"]
+    }
+  ]
+}
