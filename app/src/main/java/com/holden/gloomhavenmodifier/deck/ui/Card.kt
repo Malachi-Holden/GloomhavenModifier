@@ -8,6 +8,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import coil.compose.rememberAsyncImagePainter
+import com.holden.gloomhavenmodifier.R
 import com.holden.gloomhavenmodifier.deck.BaseCard
 import com.holden.gloomhavenmodifier.deck.model.CardModel
 
@@ -30,15 +31,17 @@ fun cardPainter(card: CardModel): Painter {
         return rememberAsyncImagePainter(model = card.imageUrl)
     }
     if (card.resourceType == "local") {
+        val id = activity.resources.getIdentifier(
+            card.imageRes,
+            "drawable",
+            "com.holden.gloomhavenmodifier"
+        )
+        if (id == 0) return painterResource(id = R.drawable.card_not_found)
         return painterResource(
-            id = activity.resources.getIdentifier(
-                card.imageRes,
-                "drawable",
-                "com.holden.gloomhavenmodifier"
-            )
+            id = id
         )
     }
-    return painterResource(id = android.R.drawable.ic_dialog_alert)
+    return painterResource(id = R.drawable.card_not_found)
 }
 
 @Composable

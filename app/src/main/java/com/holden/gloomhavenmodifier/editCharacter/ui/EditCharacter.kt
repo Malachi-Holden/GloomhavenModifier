@@ -16,13 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import com.holden.gloomhavenmodifier.editCharacter.model.Perk
+import com.holden.gloomhavenmodifier.util.toInt
 
 @Composable
 fun EditCharacter(character: CharacterModel, onSave: (CharacterModel)->Unit) {
-    val appliedPerkDescs = character.appliedPerks.map { it.description }.toSet()
+    val appliedPerkDescs = character.appliedPerks.groupingBy { it.description }.eachCount() //.map { it.description }.toSet()
     val selectedPerks = remember {
-        mutableStateMapOf<Perk, Boolean>().apply {
-            putAll(character.perks.associate { it to appliedPerkDescs.contains(it.description) })
+        mutableStateMapOf<Perk, Int>().apply {
+            putAll(character.perks.associateWith { appliedPerkDescs[it.description] ?: 0 })
         }
     }
 
@@ -37,12 +38,11 @@ fun EditCharacter(character: CharacterModel, onSave: (CharacterModel)->Unit) {
             Text(text = "Perksheet")
             LazyColumn {
                 items(character.perks) { perk ->
-                    Row {
-                        Checkbox(
-                            checked = selectedPerks[perk] ?: false,
-                            onCheckedChange = { selectedPerks[perk] = it })
-                        Text(text = perk.description)
-                    }
+                    PerkCheckRow(
+                        perk = perk,
+                        checked = selectedPerks[perk] ?: 0,
+                        onCheckChanged = { selectedPerks[perk] = it }
+                    )
                 }
             }
             Button(onClick = {
@@ -65,7 +65,7 @@ fun EditCharacter(character: CharacterModel, onSave: (CharacterModel)->Unit) {
                     Button(onClick = {
                         onSave(
                             character.copy(
-                                appliedPerks = selectedPerks.filter{ it.value }.keys.toList()
+                                appliedPerks = selectedPerks.flatMap {entry-> List(entry.value){entry.key} }
                             )
                         )
                     }) {
@@ -82,4 +82,17 @@ fun EditCharacter(character: CharacterModel, onSave: (CharacterModel)->Unit) {
         }
     }
 
+}
+
+@Composable
+fun PerkCheckRow(perk: Perk, checked: Int, onCheckChanged: (Int)->Unit){
+    Row {
+        repeat(perk.count){ i->
+            Checkbox(
+                checked = i < checked,
+                onCheckedChange = { onCheckChanged(checked + 2 * it.toInt() - 1) })
+        }
+
+        Text(text = perk.description)
+    }
 }

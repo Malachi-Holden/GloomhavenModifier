@@ -1,0 +1,97 @@
+{
+  "title": "Geminate",
+  "specialtyCards": [
+    {
+      "description": "Geminate: +0",
+      "resourceType": "local",
+      "imageRes": "geminate_plus0",
+      "reshuffle": false
+    },
+    {
+      "description": "Geminate: +0& consume any element to make any element",
+      "resourceType": "local",
+      "imageRes": "geminate_replace_element",
+      "reshuffle": false
+    },
+    {
+      "description": "Geminate: +1&wound",
+      "resourceType": "local",
+      "imageRes": "geminate_plus1_wound",
+      "reshuffle": false
+    },
+    {
+      "description": "Geminate: +1&poison",
+      "resourceType": "local",
+      "imageRes": "geminate_plus1_poison",
+      "reshuffle": false
+    },
+    {
+      "description": "Geminate: rolling pierce(3)",
+      "resourceType": "local",
+      "imageRes": "geminate_rolling_pierce3",
+      "reshuffle": false
+    },
+    {
+      "description": "Geminate: +1&push(3)",
+      "resourceType": "local",
+      "imageRes": "geminate_plus1_push3",
+      "reshuffle": false
+    },
+    {
+      "description": "Geminate: rolling +1 regenerate(self)",
+      "resourceType": "local",
+      "imageRes": "geminate_plus1_regenerate",
+      "reshuffle": false
+    },
+    {
+      "description": "Geminate: (X2)&Brittle(self)",
+      "resourceType": "local",
+      "imageRes": "geminate_2x_brittle",
+      "reshuffle": false
+    }
+  ],
+  "perks": [
+    {
+      "description": "Replace one (-2) card with one (+0) card",
+      "count":1,
+      "add": ["Geminate: +0"],
+      "remove": ["- 2"]
+    },
+    {
+      "description": "Replace one (-1) card with one (+0, consume an element to make an element) card",
+      "count":3,
+      "add": ["Geminate: +0& consume any element to make any element"],
+      "remove": ["- 1"]
+    },
+    {
+      "description": "Replace one (+0) with one (+1, poison) card",
+      "count":2,
+      "add": ["Geminate: +1&poison"],
+      "remove": ["+ 0"]
+    },
+    {
+      "description": "Replace one (+0) with one (+1, wound) card",
+      "count":2,
+      "add": ["Geminate: +1&wound"],
+      "remove": ["+ 0"]
+    },
+    {
+      "description": "Replace two (+0) with two (rolling pierce 3) cards",
+      "count":1,
+      "add": ["Geminate: rolling pierce(3)", "Geminate: rolling pierce(3)"],
+      "remove": ["+ 0", "+ 0"]
+    },
+    {
+      "description": "Add two (+1, push 3) cards",
+      "count":1,
+      "add": ["Geminate: +1&push(3)", "Geminate: +1&push(3)"],
+      "remove": []
+    },
+    {
+      "description": "Add 1 (x2, brittle self) card",
+      "count":1,
+      "add": ["Geminate: (X2)&Brittle(self)"],
+      "remove": []
+    }
+  ]
+}
