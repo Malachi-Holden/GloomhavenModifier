@@ -15,10 +15,15 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import com.holden.gloomhavenmodifier.editCharacter.RemoteCharacterRepo
 
 @Composable
 fun ChooseCharacter(onChosen: (CharacterModel)->Unit){
-    var characterList by remember {
+    var localCharacters by remember {
+        mutableStateOf<List<CharacterModel>?>(null)
+    }
+    var remoteCharacters by remember {
         mutableStateOf<List<CharacterModel>?>(null)
     }
     var chosenCharacter by remember {
@@ -28,49 +33,85 @@ fun ChooseCharacter(onChosen: (CharacterModel)->Unit){
         mutableStateOf(false)
     }
     val assets = LocalContext.current.assets
-    LaunchedEffect(Unit){
-        characterList = BuiltInCharacterRepo(assets).getCharacters()
+    val localRepo = remember {
+        BuiltInCharacterRepo(assets)
     }
-    val characters = characterList
+
+    val remoteRepo = remember {
+        RemoteCharacterRepo()
+    }
+    LaunchedEffect(Unit){
+        localCharacters = localRepo.getCharacters()
+    }
+    LaunchedEffect(Unit){
+        remoteCharacters = remoteRepo.getCharacters()
+    }
     Box {
         Column(modifier = Modifier.fillMaxSize()) {
-            Text(text = "Choose a new character class")
-            if(characters == null){
+            Text(text = "Choose a new character class", fontWeight = FontWeight.Bold)
+            val locals = localCharacters
+            if(locals == null){
                 CircularProgressIndicator()
             } else{
-                LazyColumn{
-                    items(characters){
-                        Button(onClick = {
-                            chosenCharacter = it
-                            showChosenCharacterConfirmation = true
-                        }) {
-                            Text(text = it.title)
-                        }
-                    }
-                }
+                CharacterOptions(characters = locals, onChooseCharacter = {
+                    chosenCharacter = it
+                    showChosenCharacterConfirmation = true
+                })
+            }
+
+            val remotes = remoteCharacters
+            if (remotes == null){
+                CircularProgressIndicator()
+            } else {
+                CharacterOptions(characters = remotes, onChooseCharacter = {
+                    chosenCharacter = it
+                    showChosenCharacterConfirmation = true
+                })
             }
         }
         if(showChosenCharacterConfirmation) {
-            AlertDialog(
+            CharacterChoiceConfirmationDialogue(
                 modifier = Modifier.align(Alignment.Center),
-                onDismissRequest = { showChosenCharacterConfirmation = false },
-                confirmButton = {
-                    Button(onClick = { chosenCharacter?.let(onChosen) }) {
-                        Text(text = "Do it")
-                    }
-                },
-                dismissButton = {
-                    Button(onClick = { showChosenCharacterConfirmation = false }) {
-                        Text(text = "Cancel")
-                    }
-                },
-                title = {
-                    Text(text = "Replace current character?")
-                },
-                text = {
-                    Text(text = "This will override any saved progress on your current character and will reset the deck to unshuffled")
-                }
+                onCancel = { showChosenCharacterConfirmation = false },
+                onChosen = { chosenCharacter?.let(onChosen) }
             )
         }
     }
+}
+
+@Composable
+fun CharacterOptions(characters: List<CharacterModel>, onChooseCharacter: (CharacterModel)->Unit){
+    LazyColumn{
+        items(characters){
+            Button(onClick = {
+                onChooseCharacter(it)
+            }) {
+                Text(text = it.title)
+            }
+        }
+    }
+}
+
+@Composable
+fun CharacterChoiceConfirmationDialogue(modifier: Modifier = Modifier, onCancel: ()->Unit, onChosen: () -> Unit){
+    AlertDialog(
+        modifier = modifier,
+        onDismissRequest = onCancel,
+        confirmButton = {
+            Button(onClick = onChosen) {
+                Text(text = "Do it")
+            }
+        },
+        dismissButton = {
+            Button(onClick = onCancel) {
+                Text(text = "Cancel")
+            }
+        },
+        title = {
+            Text(text = "Replace current character?")
+        },
+        text = {
+            Text(text = "This will override any saved progress on your current character and will reset the deck to unshuffled")
+        }
+    )
 }
