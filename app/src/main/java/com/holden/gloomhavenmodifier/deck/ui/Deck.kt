@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalOf
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,21 +57,30 @@ fun Deck(
                 Text(text = "Draw")
             }
         }
-        if(deck.needsShuffle){
-            Text(
-                color = Color.Red,
-                fontWeight = FontWeight.Bold,
-                fontSize = 30.sp,
-                text = "Needs Reshuffle!"
-            )
-        }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            NumberPicker(value = deck.blesses, onUp = { viewModel.insertBless() }, onDown = {viewModel.removeBless()})
-            Text(text = "Blesses")
-        }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            NumberPicker(value = deck.curses, onUp = { viewModel.insertCurse() }, onDown = {viewModel.removeCurse()})
-            Text(text = "Curses")
+        Text(
+            color = Color.Red,
+            fontWeight = FontWeight.Bold,
+            fontSize = 30.sp,
+            text = if (deck.needsShuffle) "Needs Reshuffling!" else ""
+        )
+        Row(
+            modifier= Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                NumberPicker(value = deck.blesses, onUp = { viewModel.insertBless() }, onDown = {viewModel.removeBless()})
+                Text(text = "Blesses")
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                NumberPicker(value = deck.curses, onUp = { viewModel.insertCurse() }, onDown = {viewModel.removeCurse()})
+                Text(text = "Curses")
+            }
         }
     }
 }
