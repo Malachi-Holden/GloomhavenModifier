@@ -22,6 +22,14 @@ class DeckViewModel(deck: DeckModel): ViewModel() {
         _state.value = state.value.shuffled()
     }
 
+    fun insertCurse(){
+        _state.value = state.value.insertCurse()
+    }
+
+    fun insertBless(){
+        _state.value = state.value.insertBless()
+    }
+
     class Factory(val deckModel: DeckModel): ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return DeckViewModel(deckModel) as T

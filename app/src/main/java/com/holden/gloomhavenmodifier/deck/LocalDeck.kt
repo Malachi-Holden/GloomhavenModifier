@@ -6,11 +6,6 @@ import com.holden.gloomhavenmodifier.deck.model.DeckModel
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import com.holden.gloomhavenmodifier.getLocalGloomObject
 import com.holden.gloomhavenmodifier.saveLocalGloomObject
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import java.io.FileNotFoundException
 
 val GLOOM_CHARACTER_FILE = "GLOOM_CHARACTER_FILE"
 val GLOOM_DECK_FILE = "GLOOM_DECK_FILE"
@@ -23,8 +18,16 @@ enum class BaseCard(val card: CardModel){
     MinusTwo(CardModel("- 2", "minus_two", null, false)),
     Two(CardModel("+ 2", "two", null, false)),
     Miss(CardModel("Ø", "miss", null, true)),
-    Crit(CardModel("x 2", "crit", null, true))
+    Crit(CardModel("x 2", "crit", null, true)),
+    Curse(CardModel("curse", "curse", null, false)),
+    Bless(CardModel("bless", "bless", null, false))
 }
+
+fun CardModel.isBless() = (description == BaseCard.Bless.card.description)
+
+fun CardModel.isCurse() = (description == BaseCard.Curse.card.description)
+
+fun CardModel.oneTimeUse() = isCurse() || isBless()
 
 
 fun saveLocalDeck(context: Context, deck: DeckModel){
