@@ -30,6 +30,14 @@ class DeckViewModel(deck: DeckModel): ViewModel() {
         _state.value = state.value.insertBless()
     }
 
+    fun removeCurse(){
+        _state.value = state.value.removeCurse()
+    }
+
+    fun removeBless(){
+        _state.value = state.value.removeBless()
+    }
+
     class Factory(val deckModel: DeckModel): ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return DeckViewModel(deckModel) as T
