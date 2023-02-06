@@ -1,6 +1,7 @@
 package com.holden.gloomhavenmodifier.editCharacter
 
 import android.content.res.AssetManager
+import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -17,12 +18,20 @@ class BuiltInCharacterRepo(val assets: AssetManager): CharacterRepository {
         return Json.decodeFromString(localCharacters)
     }
 
-    override suspend fun getCharacterJson(): List<String> = buildList {
+    fun getCharacterJson(): List<String> = buildList {
         for (fileName in getLocalCharacterFiles()){
             add(
                 assets.open(fileName).bufferedReader().use {
                     it.readText()
                 }
+            )
+        }
+    }
+
+    override suspend fun getCharacters(): List<CharacterModel> = buildList {
+        for (jsonCharacter in getCharacterJson()){
+            add(
+                Json.decodeFromString(jsonCharacter)
             )
         }
     }
