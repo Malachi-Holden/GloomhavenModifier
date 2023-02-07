@@ -3,10 +3,13 @@ package com.holden.gloomhavenmodifier.deck.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.holden.gloomhavenmodifier.deck.model.DeckModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
-class DeckViewModel(deck: DeckModel): ViewModel() {
+@HiltViewModel
+class DeckViewModel @Inject constructor(deck: DeckModel): ViewModel() {
     private val _state = MutableStateFlow(deck)
     val state = _state.asStateFlow()
 

@@ -4,47 +4,40 @@ import android.content.Context
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.holden.gloomhavenmodifier.bonusActions.BonusActions
-import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
-import com.holden.gloomhavenmodifier.editCharacter.ui.EditCharacter
+import com.holden.gloomhavenmodifier.LocalComponentActivity
 import com.holden.gloomhavenmodifier.chooseCharacter.ui.ChooseCharacter
-import com.holden.gloomhavenmodifier.deck.getDefaultDeck
-import com.holden.gloomhavenmodifier.deck.getLocalDeck
-import com.holden.gloomhavenmodifier.deck.saveLocalDeck
+import com.holden.gloomhavenmodifier.deck.DeckRepository
 import com.holden.gloomhavenmodifier.deck.ui.Deck
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
-import com.holden.gloomhavenmodifier.editCharacter.model.getLocalCharacter
-import com.holden.gloomhavenmodifier.editCharacter.model.saveLocalCharacter
+import com.holden.gloomhavenmodifier.editCharacter.CharacterRepository
+import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
+import com.holden.gloomhavenmodifier.editCharacter.ui.EditCharacter
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.subscribe
-import okhttp3.internal.notify
 
 enum class GloomDestination {
     Deck,
     Character,
-    ChooseCharacter,
-    BonusActions
+    ChooseCharacter
 }
 
 @Composable
 fun GloomNavHost(
-    deckViewModel: DeckViewModel,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
+    val deckViewModel: DeckViewModel = hiltViewModel(LocalComponentActivity.current)
     val context = LocalContext.current
     var currentCharacter by remember {
-        mutableStateOf(getLocalCharacter(context))
+        mutableStateOf(CharacterRepository.getLocalCharacter(context))
     }
     LaunchedEffect(Unit){
-        deckViewModel.state.onEach { saveLocalDeck(context, it) }
+        deckViewModel.state.onEach { DeckRepository.saveLocalDeck(context, it) }
             .launchIn(this)
     }
     NavHost(
@@ -53,7 +46,7 @@ fun GloomNavHost(
         startDestination = GloomDestination.Deck.name
     ) {
         composable(GloomDestination.Deck.name) {
-            Deck(deckViewModel)
+            Deck()
         }
         composable(GloomDestination.Character.name) {
             EditCharacter(
@@ -76,7 +69,7 @@ fun GloomNavHost(
 fun updateCharacter(character: CharacterModel, context: Context, deckViewModel: DeckViewModel, navController: NavHostController){
     val deck = character.buildDeck()
     deckViewModel.updateDeck(deck)
-    saveLocalCharacter(context, character)
-    saveLocalDeck(context, deck)
+    CharacterRepository.saveLocalCharacter(context, character)
+    DeckRepository.saveLocalDeck(context, deck)
     navController.popBackStack()
 }

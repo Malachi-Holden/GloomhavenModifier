@@ -2,16 +2,18 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
     namespace 'com.holden.gloomhavenmodifier'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.holden.gloomhavenmodifier"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -51,7 +53,15 @@ android {
     }
 }
 
+hilt {
+    enableAggregatingTask = true
+}
+
 dependencies {
+    implementation 'com.google.dagger:hilt-android:2.44.2'
+    kapt 'com.google.dagger:hilt-compiler:2.44.2'
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
+
     implementation "io.ktor:ktor-client-core:$ktor_version"
     implementation "io.ktor:ktor-client-cio:$ktor_version"
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -72,4 +82,8 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+}
+
+kapt {
+    correctErrorTypes true
 }

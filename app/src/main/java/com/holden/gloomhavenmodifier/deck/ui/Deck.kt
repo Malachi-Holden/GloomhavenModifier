@@ -2,25 +2,23 @@ package com.holden.gloomhavenmodifier.deck.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalOf
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.holden.gloomhavenmodifier.LocalComponentActivity
 import com.holden.gloomhavenmodifier.bonusActions.CurseAndBless
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
-import com.holden.gloomhavenmodifier.util.ui.NumberPicker
 
 @Composable
-fun Deck(
-    viewModel: DeckViewModel
-) {
+fun Deck() {
+    val viewModel: DeckViewModel = hiltViewModel(LocalComponentActivity.current)
     val deck by viewModel.state.collectAsState()
     var showCardHistory by remember {
         mutableStateOf(false)

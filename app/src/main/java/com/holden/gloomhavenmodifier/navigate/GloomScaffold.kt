@@ -8,13 +8,13 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.holden.gloomhavenmodifier.LocalComponentActivity
 import com.holden.gloomhavenmodifier.bonusActions.BonusActions
 import com.holden.gloomhavenmodifier.bonusActions.CleanDeckConfirmation
-import com.holden.gloomhavenmodifier.deck.getLocalDeck
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
 import kotlinx.coroutines.launch
 
@@ -25,11 +25,7 @@ fun GloomScaffold() {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry?.destination
 
-    val context = LocalContext.current
-    val deckViewModel: DeckViewModel
-            = viewModel(factory = DeckViewModel.Factory(
-        getLocalDeck(context)
-    ))
+    val deckViewModel: DeckViewModel = hiltViewModel(LocalComponentActivity.current)
     val scaffoldState = rememberScaffoldState()
     var showCleanDeckConfirmation by remember {
         mutableStateOf(false)
@@ -84,15 +80,11 @@ fun GloomScaffold() {
             )
         },
         drawerContent = {
-            BonusActions(
-                    viewModel = deckViewModel,
-                    showCleanDeckDialog = { showCleanDeckConfirmation = true }
-                )
+            BonusActions(showCleanDeckDialog = { showCleanDeckConfirmation = true })
         }
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             GloomNavHost(
-                deckViewModel = deckViewModel,
                 modifier = Modifier.fillMaxSize(),
                 navController = navController
             )

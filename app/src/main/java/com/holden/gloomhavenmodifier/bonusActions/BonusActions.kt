@@ -10,17 +10,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.holden.gloomhavenmodifier.LocalComponentActivity
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
 import com.holden.gloomhavenmodifier.util.ui.NumberPicker
 
 @Composable
 fun BonusActions(
-    viewModel: DeckViewModel,
+//    viewModel: DeckViewModel,
     showCleanDeckDialog: ()->Unit
 ){
+    val viewModel: DeckViewModel = hiltViewModel(LocalComponentActivity.current)
     val deck by viewModel.state.collectAsState()
     Column(
-        modifier = Modifier.padding(end = 15.dp).fillMaxSize(),
+        modifier = Modifier
+            .padding(end = 15.dp)
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
