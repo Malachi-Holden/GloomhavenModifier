@@ -13,6 +13,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.holden.gloomhavenmodifier.bonusActions.BonusActions
+import com.holden.gloomhavenmodifier.bonusActions.CleanDeckConfirmation
 import com.holden.gloomhavenmodifier.deck.getLocalDeck
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
 import kotlinx.coroutines.launch
@@ -23,10 +24,18 @@ fun GloomScaffold() {
     val scope = rememberCoroutineScope()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry?.destination
-    var showBonusActions by remember {
+
+    val context = LocalContext.current
+    val deckViewModel: DeckViewModel
+            = viewModel(factory = DeckViewModel.Factory(
+        getLocalDeck(context)
+    ))
+    val scaffoldState = rememberScaffoldState()
+    var showCleanDeckConfirmation by remember {
         mutableStateOf(false)
     }
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
                 title = {
@@ -35,7 +44,11 @@ fun GloomScaffold() {
                 navigationIcon = when (currentDestination?.route) {
                     GloomDestination.Deck.name -> {
                         {
-                            IconButton(onClick = { showBonusActions = true }) {
+                            IconButton(onClick = {
+                                scope.launch {
+                                    scaffoldState.drawerState.open()
+                                }
+                            }) {
                                 Icon(Icons.Default.Menu, "bonus actions")
                             }
                         }
@@ -70,22 +83,26 @@ fun GloomScaffold() {
                 }
             )
         },
+        drawerContent = {
+            BonusActions(
+                    viewModel = deckViewModel,
+                    showCleanDeckDialog = { showCleanDeckConfirmation = true }
+                )
+        }
     ) {
-        val context = LocalContext.current
-        val deckViewModel: DeckViewModel
-            = viewModel(factory = DeckViewModel.Factory(
-                getLocalDeck(context)
-        ))
         Box(modifier = Modifier.fillMaxSize()) {
             GloomNavHost(
                 deckViewModel = deckViewModel,
                 modifier = Modifier.fillMaxSize(),
                 navController = navController
             )
-            if(showBonusActions) {
-                BonusActions(
-                    viewModel = deckViewModel,
-                    onClose = { showBonusActions = false }
+            if (showCleanDeckConfirmation){
+                CleanDeckConfirmation(
+                    onCancel = { showCleanDeckConfirmation = false },
+                    onConfirm = {
+                        deckViewModel.cleanDeck()
+                        showCleanDeckConfirmation = false
+                    }
                 )
             }
         }

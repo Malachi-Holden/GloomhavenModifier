@@ -1,15 +1,14 @@
 package com.holden.gloomhavenmodifier.bonusActions
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.runtime.*
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
 import com.holden.gloomhavenmodifier.util.ui.NumberPicker
@@ -17,83 +16,37 @@ import com.holden.gloomhavenmodifier.util.ui.NumberPicker
 @Composable
 fun BonusActions(
     viewModel: DeckViewModel,
-    onClose: ()->Unit
+    showCleanDeckDialog: ()->Unit
 ){
     val deck by viewModel.state.collectAsState()
-
-    var showCleanDeckConfirmation by remember {
-        mutableStateOf(false)
-    }
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = Color.Black.copy(alpha = 0.5f))
-            .clickable { onClose() }
+    Column(
+        modifier = Modifier.padding(end = 15.dp).fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .fillMaxSize(0.8f)
-                .background(color = Color.White.copy(alpha = 0.95f)),
-            horizontalAlignment = Alignment.CenterHorizontally
+
+        CurseAndBless(
+            blesses = deck.blesses,
+            curses = deck.curses,
+            addBless = { viewModel.insertBless() },
+            addCurse = { viewModel.insertCurse() },
+            removeBless = { viewModel.removeBless() },
+            removeCurse = { viewModel.removeCurse() }
+        )
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceAround
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start
-            ) {
-                IconButton(onClick = onClose) {
-                    Icon(Icons.Default.Close, "close")
-                }
-            }
-
-            CurseAndBless(
-                blesses = deck.blesses,
-                curses = deck.curses,
-                addBless = { viewModel.insertBless() },
-                addCurse = { viewModel.insertCurse() },
-                removeBless = { viewModel.removeBless() },
-                removeCurse = { viewModel.removeCurse() }
-            )
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                NumberPicker(
-                    value = deck.bonusMinuses,
-                    onUp = { viewModel.insertBonusMinus() },
-                    onDown = { viewModel.removeBonusMinus() })
-                Text(text = "Bonus Minuses (scenario and item effects)")
-            }
-
-            Button(onClick = { showCleanDeckConfirmation = true }) {
-                Text(text = "Clean Deck")
-            }
-
-            Box(modifier = Modifier.fillMaxSize()) {
-                Button(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(10.dp),
-                    onClick = onClose
-                ) {
-                    Text(text = "Ok")
-                }
-            }
+            NumberPicker(
+                value = deck.bonusMinuses,
+                onUp = { viewModel.insertBonusMinus() },
+                onDown = { viewModel.removeBonusMinus() })
+            Text(text = "Bonus Minuses (scenario and item effects)")
         }
 
-
-        if (showCleanDeckConfirmation) {
-            CleanDeckConfirmation(
-                modifier = Modifier.align(Alignment.Center),
-                onCancel = { showCleanDeckConfirmation = false },
-                onConfirm = {
-                    viewModel.cleanDeck()
-                    showCleanDeckConfirmation = false
-                }
-            )
+        Button(onClick = showCleanDeckDialog) {
+            Text(text = "Clean Deck")
         }
-
     }
 }
 
