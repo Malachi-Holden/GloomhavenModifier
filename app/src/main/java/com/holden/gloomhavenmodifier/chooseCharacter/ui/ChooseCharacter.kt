@@ -4,66 +4,47 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalContext
-import com.holden.gloomhavenmodifier.editCharacter.BuiltInCharacterRepo
-import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import com.holden.gloomhavenmodifier.editCharacter.RemoteCharacterRepo
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterState
+import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterViewModel
+import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 
 @Composable
-fun ChooseCharacter(onChosen: (CharacterModel)->Unit){
-    var localCharacters by remember {
-        mutableStateOf<List<CharacterModel>?>(null)
-    }
-    var remoteCharacters by remember {
-        mutableStateOf<List<CharacterModel>?>(null)
-    }
+fun ChooseCharacter(
+    viewModel: CharacterViewModel = hiltViewModel(),
+    onChosen: (CharacterModel)->Unit
+){
     var chosenCharacter by remember {
         mutableStateOf<CharacterModel?>(null)
     }
     var showChosenCharacterConfirmation by remember {
         mutableStateOf(false)
     }
-    val assets = LocalContext.current.assets
-    val localRepo = remember {
-        BuiltInCharacterRepo(assets)
-    }
-
-    val remoteRepo = remember {
-        RemoteCharacterRepo()
-    }
-    LaunchedEffect(Unit){
-        localCharacters = localRepo.getCharacters()
-    }
-    LaunchedEffect(Unit){
-        remoteCharacters = remoteRepo.getCharacters()
-    }
     Box {
         Column(modifier = Modifier.fillMaxSize()) {
             Text(text = "Choose a new character class", fontWeight = FontWeight.Bold)
-            val locals = localCharacters
-            if(locals == null){
-                CircularProgressIndicator()
-            } else{
-                CharacterOptions(characters = locals, onChooseCharacter = {
+            when (val local = viewModel.localCharacterState.collectAsState().value){
+                is CharacterState.Loading -> CircularProgressIndicator()
+                is CharacterState.Error -> Text(text = "Error loading local characters")
+                is CharacterState.Loaded -> CharacterOptions(characters = local.characters, onChooseCharacter = {
                     chosenCharacter = it
                     showChosenCharacterConfirmation = true
                 })
             }
-
-            val remotes = remoteCharacters
-            if (remotes == null){
-                CircularProgressIndicator()
-            } else {
-                CharacterOptions(characters = remotes, onChooseCharacter = {
+            when (val remote = viewModel.remoteCharacterState.collectAsState().value){
+                is CharacterState.Loading -> CircularProgressIndicator()
+                is CharacterState.Error -> Text(text = "Error loading remote characters")
+                is CharacterState.Loaded -> CharacterOptions(characters = remote.characters, onChooseCharacter = {
                     chosenCharacter = it
                     showChosenCharacterConfirmation = true
                 })

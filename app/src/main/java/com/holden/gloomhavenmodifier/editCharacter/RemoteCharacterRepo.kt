@@ -1,6 +1,7 @@
 package com.holden.gloomhavenmodifier.editCharacter
 
 import android.util.Log
+import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterState
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -9,6 +10,7 @@ import io.ktor.client.request.*
 import io.ktor.client.engine.cio.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
 val REMOTE_ASSET_URL = "https://raw.githubusercontent.com/Malachi-Holden/GloomhavenModifier/master/remoteAssets/"
 /**
@@ -17,7 +19,7 @@ val REMOTE_ASSET_URL = "https://raw.githubusercontent.com/Malachi-Holden/Gloomha
  * -install(ContentNegotiation)
  * -json()
  */
-class RemoteCharacterRepo(val client: HttpClient = client()): CharacterRepository {
+class RemoteCharacterRepo @Inject constructor(val client: HttpClient): CharacterRepository {
     suspend fun getCharacterAssetFiles(): List<String> {
         val body: String= client.get(
             REMOTE_ASSET_URL + "RemoteCharacters.json"
@@ -25,20 +27,16 @@ class RemoteCharacterRepo(val client: HttpClient = client()): CharacterRepositor
         return Json.decodeFromString(body)
     }
 
-    override suspend fun getCharacters(): List<CharacterModel> = buildList {
-        try {
-            for (file in getCharacterAssetFiles()) {
-                val body: String = client.get(REMOTE_ASSET_URL + file).body()
-                add(Json.decodeFromString(body))
-            }
-        } catch (e: ResponseException){
-            Log.d("RemoteCharacterRepo", e.message?: e.response.status.description)
+    suspend fun attemptGetCharacters(): List<CharacterModel> = buildList {
+        for (file in getCharacterAssetFiles()) {
+            val body: String = client.get(REMOTE_ASSET_URL + file).body()
+            add(Json.decodeFromString(body))
         }
     }
 
-    companion object{
-        fun client() = HttpClient(CIO){
-            expectSuccess = true
-        }
+    override suspend fun getCharacters(): CharacterState = try {
+        CharacterState.Loaded(attemptGetCharacters())
+    } catch (e: ResponseException) {
+        CharacterState.Error(e)
     }
 }
