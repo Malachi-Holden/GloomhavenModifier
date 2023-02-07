@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.holden.gloomhavenmodifier.LocalComponentActivity
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
 import com.holden.gloomhavenmodifier.util.ui.NumberPicker
 
@@ -20,7 +21,7 @@ fun BonusActions(
 //    viewModel: DeckViewModel,
     showCleanDeckDialog: ()->Unit
 ){
-    val viewModel: DeckViewModel = hiltViewModel()
+    val viewModel: DeckViewModel = hiltViewModel(LocalComponentActivity.current)
     val deck by viewModel.state.collectAsState()
     Column(
         modifier = Modifier

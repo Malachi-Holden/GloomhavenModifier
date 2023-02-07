@@ -12,6 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.holden.gloomhavenmodifier.LocalComponentActivity
 import com.holden.gloomhavenmodifier.bonusActions.BonusActions
 import com.holden.gloomhavenmodifier.bonusActions.CleanDeckConfirmation
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
@@ -24,7 +25,7 @@ fun GloomScaffold() {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry?.destination
 
-    val deckViewModel: DeckViewModel = hiltViewModel()
+    val deckViewModel: DeckViewModel = hiltViewModel(LocalComponentActivity.current)
     val scaffoldState = rememberScaffoldState()
     var showCleanDeckConfirmation by remember {
         mutableStateOf(false)

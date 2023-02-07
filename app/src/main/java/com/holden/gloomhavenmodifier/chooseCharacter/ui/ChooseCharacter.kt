@@ -15,13 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.holden.gloomhavenmodifier.LocalComponentActivity
 import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterState
 import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterViewModel
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 
 @Composable
 fun ChooseCharacter(
-    viewModel: CharacterViewModel = hiltViewModel(),
+    viewModel: CharacterViewModel = hiltViewModel(LocalComponentActivity.current),
     onChosen: (CharacterModel)->Unit
 ){
     var chosenCharacter by remember {

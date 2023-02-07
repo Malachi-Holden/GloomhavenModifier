@@ -1,13 +1,11 @@
 package com.holden.gloomhavenmodifier.editCharacter
 
-import android.util.Log
 import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterState
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
-import io.ktor.client.engine.cio.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject

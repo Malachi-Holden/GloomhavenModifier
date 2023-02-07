@@ -12,12 +12,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.holden.gloomhavenmodifier.LocalComponentActivity
 import com.holden.gloomhavenmodifier.bonusActions.CurseAndBless
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
 
 @Composable
-fun Deck(viewModel: DeckViewModel = hiltViewModel()) {
+fun Deck() {
+    val viewModel: DeckViewModel = hiltViewModel(LocalComponentActivity.current)
     val deck by viewModel.state.collectAsState()
     var showCardHistory by remember {
         mutableStateOf(false)

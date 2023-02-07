@@ -3,7 +3,6 @@ package com.holden.gloomhavenmodifier.chooseCharacter.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.holden.gloomhavenmodifier.editCharacter.BuiltInCharacterRepo
-import com.holden.gloomhavenmodifier.editCharacter.CharacterRepository
 import com.holden.gloomhavenmodifier.editCharacter.RemoteCharacterRepo
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import dagger.hilt.android.lifecycle.HiltViewModel

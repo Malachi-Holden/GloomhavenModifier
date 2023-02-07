@@ -1,15 +1,13 @@
 package com.holden.gloomhavenmodifier.deck
 
 import android.content.Context
-import com.holden.gloomhavenmodifier.R
 import com.holden.gloomhavenmodifier.deck.model.CardModel
 import com.holden.gloomhavenmodifier.deck.model.DeckModel
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import com.holden.gloomhavenmodifier.getLocalGloomObject
 import com.holden.gloomhavenmodifier.saveLocalGloomObject
-
-val GLOOM_CHARACTER_FILE = "GLOOM_CHARACTER_FILE"
-val GLOOM_DECK_FILE = "GLOOM_DECK_FILE"
+import javax.inject.Inject
+import javax.inject.Singleton
 
 enum class BaseCard(val card: CardModel){
     BackOfCard(CardModel("back of card", "back", null, false)),
@@ -25,8 +23,6 @@ enum class BaseCard(val card: CardModel){
     BonusMinus(CardModel("*- 1", "scenario_effect_minus_1", null, false))
 }
 
-val x = R.drawable.scenario_effect_minus_1
-
 fun CardModel.isBless() = (description == BaseCard.Bless.card.description)
 
 fun CardModel.isCurse() = (description == BaseCard.Curse.card.description)
@@ -37,28 +33,36 @@ fun CardModel.oneTimeUse() = isCurse() || isBless()
 
 fun CardModel.isExtraCard() = isCurse() || isBless() || isBonusMinus()
 
+@Singleton
+class DeckRepository @Inject constructor(val deck: DeckModel) {
+    companion object{
 
-fun saveLocalDeck(context: Context, deck: DeckModel){
-    saveLocalGloomObject(context, deck, GLOOM_DECK_FILE)
+        val GLOOM_DECK_FILE = "GLOOM_DECK_FILE"
+
+
+        fun saveLocalDeck(context: Context, deck: DeckModel){
+            saveLocalGloomObject(context, deck, GLOOM_DECK_FILE)
+        }
+
+        fun getLocalDeck(context: Context): DeckModel {
+            return getLocalGloomObject<DeckModel>(context, GLOOM_DECK_FILE) ?: CharacterModel.NoClass.buildDeck()
+        }
+
+
+        fun getDefaultDeck() = DeckModel(buildList {
+            repeat(6){
+                add(BaseCard.Zero.card)
+            }
+            repeat(5){
+                add(BaseCard.One.card)
+            }
+            repeat(5){
+                add(BaseCard.MinusOne.card)
+            }
+            add(BaseCard.MinusTwo.card)
+            add(BaseCard.Two.card)
+            add(BaseCard.Miss.card)
+            add(BaseCard.Crit.card)
+        })
+    }
 }
-
-fun getLocalDeck(context: Context): DeckModel{
-    return getLocalGloomObject<DeckModel>(context, GLOOM_DECK_FILE) ?: CharacterModel.NoClass.buildDeck()
-}
-
-
-fun getDefaultDeck() = DeckModel(buildList {
-    repeat(6){
-        add(BaseCard.Zero.card)
-    }
-    repeat(5){
-        add(BaseCard.One.card)
-    }
-    repeat(5){
-        add(BaseCard.MinusOne.card)
-    }
-    add(BaseCard.MinusTwo.card)
-    add(BaseCard.Two.card)
-    add(BaseCard.Miss.card)
-    add(BaseCard.Crit.card)
-})
