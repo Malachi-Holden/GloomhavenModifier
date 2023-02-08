@@ -4,7 +4,7 @@
     {
       "description": "Pyroclast: +0&create one 1-hex hazardous terrain tile",
       "resourceType": "remote",
-      "url": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_create_hazardous.png?raw=true",
+      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_create_hazardous.png?raw=true",
       "reshuffle": false
     },
     {
@@ -16,25 +16,25 @@
     {
       "description": "Pyroclast: +0&rolling push(2)",
       "resourceType": "remote",
-      "url": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_rolling_push2.png?raw=true",
+      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_rolling_push2.png?raw=true",
       "reshuffle": false
     },
     {
       "description": "Pyroclast: +1&rolling muddle",
       "resourceType": "remote",
-      "url": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_rolling_plus1_muddle.png?raw=true",
+      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_rolling_plus1_muddle.png?raw=true",
       "reshuffle": false
     },
     {
       "description": "Pyroclast: +2",
       "resourceType": "remote",
-      "url": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_plus2.png?raw=true",
+      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_plus2.png?raw=true",
       "reshuffle": false
     },
     {
       "description": "Pyroclast: +1& infuse(earth or fire)",
       "resourceType": "remote",
-      "url": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_plus1_fire_earth.png?raw=true",
+      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_plus1_fire_earth.png?raw=true",
       "reshuffle": false
     }
   ],
