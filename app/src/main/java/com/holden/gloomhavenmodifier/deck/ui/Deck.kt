@@ -14,16 +14,26 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.holden.gloomhavenmodifier.LocalComponentActivity
 import com.holden.gloomhavenmodifier.bonusActions.CurseAndBless
+import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterViewModel
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
 
 @Composable
 fun Deck() {
-    val viewModel: DeckViewModel = hiltViewModel(LocalComponentActivity.current)
-    val deck by viewModel.state.collectAsState()
+    val deckViewModel: DeckViewModel = hiltViewModel(LocalComponentActivity.current)
+    val deck by deckViewModel.state.collectAsState()
+
+    val characterViewModel: CharacterViewModel = hiltViewModel(LocalComponentActivity.current)
+    val character by characterViewModel.currentCharacterState.collectAsState()
+
     var showCardHistory by remember {
         mutableStateOf(false)
     }
     Box {
+        Text(
+            modifier = Modifier.align(Alignment.TopStart).padding(5.dp),
+            text = character.title,
+            fontWeight = FontWeight.Bold
+        )
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -56,10 +66,10 @@ fun Deck() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                Button(onClick = { viewModel.shuffle() }) {
+                Button(onClick = { deckViewModel.shuffle() }) {
                     Text(text = "Shuffle")
                 }
-                Button(onClick = { viewModel.draw() }) {
+                Button(onClick = { deckViewModel.draw() }) {
                     Text(text = "Draw")
                 }
             }
@@ -73,10 +83,10 @@ fun Deck() {
             CurseAndBless(
                 blesses = deck.blesses,
                 curses = deck.curses,
-                addBless = { viewModel.insertBless() },
-                addCurse = { viewModel.insertCurse() },
-                removeBless = { viewModel.removeBless() },
-                removeCurse = { viewModel.removeCurse() }
+                addBless = { deckViewModel.insertBless() },
+                addCurse = { deckViewModel.insertCurse() },
+                removeBless = { deckViewModel.removeBless() },
+                removeCurse = { deckViewModel.removeCurse() }
             )
         }
         if (showCardHistory){

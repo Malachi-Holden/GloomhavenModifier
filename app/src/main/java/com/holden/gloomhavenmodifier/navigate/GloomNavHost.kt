@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.holden.gloomhavenmodifier.LocalComponentActivity
 import com.holden.gloomhavenmodifier.chooseCharacter.ui.ChooseCharacter
+import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterViewModel
 import com.holden.gloomhavenmodifier.deck.DeckRepository
 import com.holden.gloomhavenmodifier.deck.ui.Deck
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
@@ -32,10 +33,8 @@ fun GloomNavHost(
     navController: NavHostController = rememberNavController()
 ) {
     val deckViewModel: DeckViewModel = hiltViewModel(LocalComponentActivity.current)
+    val characterViewModel: CharacterViewModel = hiltViewModel(LocalComponentActivity.current)
     val context = LocalContext.current
-    var currentCharacter by remember {
-        mutableStateOf(CharacterRepository.getLocalCharacter(context))
-    }
     LaunchedEffect(Unit){
         deckViewModel.state.onEach { DeckRepository.saveLocalDeck(context, it) }
             .launchIn(this)
@@ -50,23 +49,21 @@ fun GloomNavHost(
         }
         composable(GloomDestination.Character.name) {
             EditCharacter(
-                character = currentCharacter,
                 onSave = { chosen->
-                    currentCharacter = chosen
-                    updateCharacter(chosen, context, deckViewModel, navController)
+                    updateCharacter(chosen, context, characterViewModel, deckViewModel, navController)
                 }
             )
         }
         composable(GloomDestination.ChooseCharacter.name) {
             ChooseCharacter(onChosen = { chosen->
-                currentCharacter = chosen
-                updateCharacter(chosen, context, deckViewModel, navController)
+                updateCharacter(chosen, context, characterViewModel, deckViewModel, navController)
             })
         }
     }
 }
 
-fun updateCharacter(character: CharacterModel, context: Context, deckViewModel: DeckViewModel, navController: NavHostController){
+fun updateCharacter(character: CharacterModel, context: Context, characterViewModel: CharacterViewModel, deckViewModel: DeckViewModel, navController: NavHostController){
+    characterViewModel.chooseCharacter(character)
     val deck = character.buildDeck()
     deckViewModel.updateDeck(deck)
     CharacterRepository.saveLocalCharacter(context, character)
