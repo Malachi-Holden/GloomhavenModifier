@@ -18,7 +18,8 @@ data class CharacterModel(
             BaseCard.values().associate { it.card.description to it.card }
                     + specialtyCards.associate { it.description to it },
             appliedPerks
-        )
+        ),
+        needsShuffle = true
     )
 
     companion object{
