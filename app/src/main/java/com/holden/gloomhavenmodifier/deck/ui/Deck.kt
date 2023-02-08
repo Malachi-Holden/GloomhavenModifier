@@ -23,7 +23,7 @@ fun Deck() {
     val deck by deckViewModel.state.collectAsState()
 
     val characterViewModel: CharacterViewModel = hiltViewModel(LocalComponentActivity.current)
-    val character by characterViewModel.chosenCharacterState.collectAsState()
+    val character by characterViewModel.currentCharacterState.collectAsState()
 
     var showCardHistory by remember {
         mutableStateOf(false)

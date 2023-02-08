@@ -3,7 +3,6 @@ package com.holden.gloomhavenmodifier.chooseCharacter.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.holden.gloomhavenmodifier.editCharacter.BuiltInCharacterRepo
-import com.holden.gloomhavenmodifier.editCharacter.CharacterRepository
 import com.holden.gloomhavenmodifier.editCharacter.RemoteCharacterRepo
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,8 +23,8 @@ class CharacterViewModel @Inject constructor(
     private var _remoteCharacterListState = MutableStateFlow<CharacterState>(CharacterState.Loading)
     val remoteCharacterListState = _remoteCharacterListState.asStateFlow()
 
-    private var _chosenCharacterState = MutableStateFlow(initialCharacter)
-    val chosenCharacterState = _chosenCharacterState.asStateFlow()
+    private var _currentCharacterState = MutableStateFlow(initialCharacter)
+    val currentCharacterState = _currentCharacterState.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -37,7 +36,7 @@ class CharacterViewModel @Inject constructor(
     }
 
     fun chooseCharacter(character: CharacterModel){
-        _chosenCharacterState.value = character
+        _currentCharacterState.value = character
     }
 }
 

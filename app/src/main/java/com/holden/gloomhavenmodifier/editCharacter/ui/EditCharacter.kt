@@ -23,7 +23,7 @@ import com.holden.gloomhavenmodifier.util.ui.CustomCheckBox
 @Composable
 fun EditCharacter(onSave: (CharacterModel)->Unit) {
     val characterViewModel: CharacterViewModel = hiltViewModel(LocalComponentActivity.current)
-    val character by characterViewModel.chosenCharacterState.collectAsState()
+    val character by characterViewModel.currentCharacterState.collectAsState()
     val appliedPerkDescs = character.appliedPerks.groupingBy { it.description }.eachCount()
     val selectedPerks = remember {
         mutableStateMapOf<Perk, Int>().apply {
