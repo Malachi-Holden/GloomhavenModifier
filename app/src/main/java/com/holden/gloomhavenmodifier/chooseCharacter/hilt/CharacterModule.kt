@@ -10,16 +10,15 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
-import dagger.hilt.components.SingletonComponent
 import io.ktor.client.*
-import io.ktor.client.engine.cio.*
+import io.ktor.client.engine.okhttp.*
 
 @Module
 @InstallIn(ViewModelComponent::class)
 class CharacterModule {
     @Provides
     @ViewModelScoped
-    fun providesClient(): HttpClient = HttpClient(CIO){
+    fun providesClient(): HttpClient = HttpClient(OkHttp){
         expectSuccess = true
     }
 

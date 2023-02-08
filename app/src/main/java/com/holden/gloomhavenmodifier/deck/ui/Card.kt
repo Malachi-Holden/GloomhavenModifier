@@ -27,7 +27,7 @@ fun Card(modifier: Modifier = Modifier, card: CardModel) {
 @Composable
 fun cardPainter(card: CardModel): Painter {
     val activity = LocalContext.current
-    if (card.resourceType == "url") {
+    if (card.resourceType == "remote") {
         return rememberAsyncImagePainter(model = card.imageUrl)
     }
     if (card.resourceType == "local") {

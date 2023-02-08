@@ -19,9 +19,10 @@ val REMOTE_ASSET_URL = "https://raw.githubusercontent.com/Malachi-Holden/Gloomha
  */
 class RemoteCharacterRepo @Inject constructor(val client: HttpClient): CharacterRepository {
     suspend fun getCharacterAssetFiles(): List<String> {
-        val body: String= client.get(
+        val response= client.get(
             REMOTE_ASSET_URL + "RemoteCharacters.json"
-        ).body()
+        )
+        val body: String = response.body()
         return Json.decodeFromString(body)
     }
 
