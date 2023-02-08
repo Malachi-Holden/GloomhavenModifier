@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.holden.gloomhavenmodifier.LocalComponentActivity
 import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterState
 import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterViewModel
@@ -22,9 +21,9 @@ import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 
 @Composable
 fun ChooseCharacter(
-    viewModel: CharacterViewModel = hiltViewModel(LocalComponentActivity.current),
     onChosen: (CharacterModel)->Unit
 ){
+    val viewModel: CharacterViewModel = hiltViewModel(LocalComponentActivity.current)
     var chosenCharacter by remember {
         mutableStateOf<CharacterModel?>(null)
     }
@@ -34,7 +33,7 @@ fun ChooseCharacter(
     Box {
         Column(modifier = Modifier.fillMaxSize()) {
             Text(text = "Choose a new character class", fontWeight = FontWeight.Bold)
-            when (val local = viewModel.localCharacterState.collectAsState().value){
+            when (val local = viewModel.localCharacterListState.collectAsState().value){
                 is CharacterState.Loading -> CircularProgressIndicator()
                 is CharacterState.Error -> Text(text = "Error loading local characters")
                 is CharacterState.Loaded -> CharacterOptions(characters = local.characters, onChooseCharacter = {
@@ -42,7 +41,7 @@ fun ChooseCharacter(
                     showChosenCharacterConfirmation = true
                 })
             }
-            when (val remote = viewModel.remoteCharacterState.collectAsState().value){
+            when (val remote = viewModel.remoteCharacterListState.collectAsState().value){
                 is CharacterState.Loading -> CircularProgressIndicator()
                 is CharacterState.Error -> Text(text = "Error loading remote characters")
                 is CharacterState.Loaded -> CharacterOptions(characters = remote.characters, onChooseCharacter = {

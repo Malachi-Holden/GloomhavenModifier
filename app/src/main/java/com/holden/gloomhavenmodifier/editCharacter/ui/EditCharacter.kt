@@ -5,7 +5,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
-import androidx.compose.material.Checkbox
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -13,13 +12,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.holden.gloomhavenmodifier.LocalComponentActivity
+import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterViewModel
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import com.holden.gloomhavenmodifier.editCharacter.model.Perk
 import com.holden.gloomhavenmodifier.util.toInt
 import com.holden.gloomhavenmodifier.util.ui.CustomCheckBox
 
 @Composable
-fun EditCharacter(character: CharacterModel, onSave: (CharacterModel)->Unit) {
+fun EditCharacter(onSave: (CharacterModel)->Unit) {
+    val characterViewModel: CharacterViewModel = hiltViewModel(LocalComponentActivity.current)
+    val character by characterViewModel.chosenCharacterState.collectAsState()
     val appliedPerkDescs = character.appliedPerks.groupingBy { it.description }.eachCount()
     val selectedPerks = remember {
         mutableStateMapOf<Perk, Int>().apply {
@@ -33,7 +37,11 @@ fun EditCharacter(character: CharacterModel, onSave: (CharacterModel)->Unit) {
 
     Box {
         Column(modifier = Modifier.fillMaxSize()) {
-            Text(fontWeight = FontWeight.Bold, text = character.title)
+            Text(
+                modifier = Modifier.padding(5.dp),
+                text = character.title,
+                fontWeight = FontWeight.Bold,
+            )
 
             Text(text = "Perksheet")
             LazyColumn {

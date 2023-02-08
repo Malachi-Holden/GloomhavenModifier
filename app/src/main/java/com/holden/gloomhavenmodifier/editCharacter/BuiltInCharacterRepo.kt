@@ -1,8 +1,11 @@
 package com.holden.gloomhavenmodifier.editCharacter
 
+import android.content.Context
 import android.content.res.AssetManager
 import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterState
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
+import com.holden.gloomhavenmodifier.getLocalGloomObject
+import com.holden.gloomhavenmodifier.saveLocalGloomObject
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -39,4 +42,16 @@ class BuiltInCharacterRepo @Inject constructor(val assets: AssetManager): Charac
             )
         }
     })
+
+    companion object{
+        val GLOOM_CHARACTER_FILE = "GLOOM_CHARACTER_FILE"
+
+        fun saveLocalCharacter(context: Context, character: CharacterModel){
+            saveLocalGloomObject(context, character, GLOOM_CHARACTER_FILE)
+        }
+
+        fun getLocalCharacter(context: Context): CharacterModel{
+            return getLocalGloomObject(context, GLOOM_CHARACTER_FILE) ?: CharacterModel.NoClass
+        }
+    }
 }
