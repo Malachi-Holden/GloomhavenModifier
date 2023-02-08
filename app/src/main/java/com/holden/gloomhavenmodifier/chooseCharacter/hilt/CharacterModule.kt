@@ -12,6 +12,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.serialization.kotlinx.json.*
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -20,6 +22,9 @@ class CharacterModule {
     @ViewModelScoped
     fun providesClient(): HttpClient = HttpClient(OkHttp){
         expectSuccess = true
+        install(ContentNegotiation){
+            json()
+        }
     }
 
     @Provides

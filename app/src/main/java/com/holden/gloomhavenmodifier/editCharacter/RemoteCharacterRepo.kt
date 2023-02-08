@@ -10,7 +10,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
-val REMOTE_ASSET_URL = "https://raw.githubusercontent.com/Malachi-Holden/GloomhavenModifier/master/remoteAssets/"
+val REMOTE_ASSET_URL = "https://api.github.com/repos/Malachi-Holden/GloomhavenModifier/contents/remoteAssets/"
 /**
  * client needs to be configured with:
  * -expectSuccess = true
@@ -19,10 +19,9 @@ val REMOTE_ASSET_URL = "https://raw.githubusercontent.com/Malachi-Holden/Gloomha
  */
 class RemoteCharacterRepo @Inject constructor(val client: HttpClient): CharacterRepository {
     suspend fun getCharacterAssetFiles(): List<String> {
-        val response= client.get(
+        val body: Json  = client.get(
             REMOTE_ASSET_URL + "RemoteCharacters.json"
-        )
-        val body: String = response.body()
+        ).body()
         return Json.decodeFromString(body)
     }
 
