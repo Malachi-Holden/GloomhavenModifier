@@ -1,0 +1,91 @@
+{
+  "title": "Pyroclast",
+  "specialtyCards": [
+    {
+      "description": "Pyroclast: +0&create one 1-hex hazardous terrain tile",
+      "resourceType": "remote",
+      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_create_hazardous.png?raw=true",
+      "reshuffle": false
+    },
+    {
+      "description": "Pyroclast: +1&wound",
+      "resourceType": "remote",
+      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_plus1_wound.png?raw=true",
+      "reshuffle": false
+    },
+    {
+      "description": "Pyroclast: +0&rolling push(2)",
+      "resourceType": "remote",
+      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_rolling_push2.png?raw=true",
+      "reshuffle": false
+    },
+    {
+      "description": "Pyroclast: +1&rolling muddle",
+      "resourceType": "remote",
+      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_rolling_plus1_muddle.png?raw=true",
+      "reshuffle": false
+    },
+    {
+      "description": "Pyroclast: +2",
+      "resourceType": "remote",
+      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_plus2.png?raw=true",
+      "reshuffle": false
+    },
+    {
+      "description": "Pyroclast: +1& infuse(earth or fire)",
+      "resourceType": "remote",
+      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_plus1_fire_earth.png?raw=true",
+      "reshuffle": false
+    }
+  ],
+  "perks": [
+    {
+      "description": "Remove two (-1) cards",
+      "count":1,
+      "add": [],
+      "remove": ["- 1", "- 1"]
+    },
+    {
+      "description": "Remove one (-2) card",
+      "count":1,
+      "add": [],
+      "remove": ["- 2"]
+    },
+    {
+      "description": "Replace one (+0) with one (+1, wound) card",
+      "count":2,
+      "add": ["Pyroclast: +1&wound"],
+      "remove": ["+ 0"]
+    },
+    {
+      "description": "Replace one (-1) with one (+0, create one 1-hex hazardous terrain tile in a featureless hex adjacent to the target) card",
+      "count":2,
+      "add": ["Pyroclast: +0&create one 1-hex hazardous terrain tile"],
+      "remove": ["- 1"]
+    },
+    {
+      "description": "Replace two (+0) with two (rolling push 2) cards",
+      "count":2,
+      "add": ["Pyroclast: +0&rolling push(2)", "Pyroclast: +0&rolling push(2)"],
+      "remove": ["+ 0", "+ 0"]
+    },
+    {
+      "description": "Replace two (+1) cards with two (+2) cards",
+      "count":1,
+      "add": ["Pyroclast: +2", "Pyroclast: +2"],
+      "remove": ["+ 1", "+ 1"]
+    },
+    {
+      "description": "Add two (+1, infuse fire or earth) cards",
+      "count":2,
+      "add": ["Pyroclast: +1& infuse(earth or fire)", "Pyroclast: +1& infuse(earth or fire)"],
+      "remove": []
+    },
+    {
+      "description": "Add two (+1, rolling muddle) cards",
+      "count":2,
+      "add": ["Pyroclast: +1&rolling muddle", "Pyroclast: +1&rolling muddle"],
+      "remove": []
+    }
+  ]
+}
