@@ -10,7 +10,7 @@
     {
       "description": "Pyroclast: +1&wound",
       "resourceType": "remote",
-      "url": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_plus1_wound.png?raw=true",
+      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_plus1_wound.png?raw=true",
       "reshuffle": false
     },
     {
