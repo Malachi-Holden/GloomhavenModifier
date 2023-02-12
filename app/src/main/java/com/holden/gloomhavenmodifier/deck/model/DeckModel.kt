@@ -51,6 +51,7 @@ data class DeckModel(
     fun draw(at: Int)  = cards.moved(at, position).let { cards->
         copy(
             cards = cards,
+            needsShuffle = needsShuffle || cards[position].reshuffle,
             curses = cards.count(position + 1, cards.size){it.isCurse()},
             blesses = cards.count(position + 1, cards.size){it.isBless()},
             position = position + 1
@@ -78,7 +79,8 @@ data class DeckModel(
             cards = cards,
             curses = cards.count(position - 1, cards.size){it.isCurse()},
             blesses = cards.count(position - 1, cards.size){it.isBless()},
-            position = position - 1
+            position = position - 1,
+            needsShuffle = cards.any(0, position - 1) { it.reshuffle }
         )
     }.shuffledRemaining()
 

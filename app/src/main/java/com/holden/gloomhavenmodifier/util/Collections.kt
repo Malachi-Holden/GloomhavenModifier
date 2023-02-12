@@ -19,3 +19,5 @@ fun <E>List<E>.moved(from: Int, to: Int) = if (from < to){
 }
 
 fun <E>List<E>.count(from: Int, to: Int, predicate: (E) -> Boolean) = subList(from, to).count(predicate)
+
+fun <E>List<E>.any(from: Int, to: Int, predicate: (E) -> Boolean) = subList(from, to).any(predicate)

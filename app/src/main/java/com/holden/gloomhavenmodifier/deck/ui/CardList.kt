@@ -18,13 +18,12 @@ import kotlinx.coroutines.launch
 fun CardList(
     onClose: ()->Unit,
     cards: List<CardModel>,
+    cardState: CardState = rememberCardState(),
     extraCardContent: @Composable (Int)->Unit
 ){
-    var focusedCard by remember {
-        mutableStateOf(-1)
-    }
     val lazyListState = rememberLazyListState()
     val scope = rememberCoroutineScope()
+    var focusedCard by (cardState as CardListCardState).focusedCard
     ClosableOverlay(onClose = onClose) {
         LazyColumn(state = lazyListState) {
             items(cards.size){
@@ -50,5 +49,21 @@ fun CardList(
 
             }
         }
+    }
+}
+
+@Composable
+fun rememberCardState(): CardState = remember {
+    CardListCardState(-1)
+}
+
+interface CardState{
+    fun hideExtraContent()
+}
+
+class CardListCardState(initialVal: Int): CardState{
+    val focusedCard = mutableStateOf(initialVal)
+    override fun hideExtraContent() {
+        focusedCard.value = -1
     }
 }

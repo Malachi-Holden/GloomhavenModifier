@@ -28,6 +28,7 @@ fun Deck() {
     var showCardHistory by remember {
         mutableStateOf(false)
     }
+    val cardState = rememberCardState()
     Box {
         Text(
             modifier = Modifier
@@ -95,9 +96,11 @@ fun Deck() {
             CardList(
                 onClose = { showCardHistory = false },
                 cards = deck.drawnCards(),
+                cardState = cardState,
                 extraCardContent = {
                     Button(onClick = {
                         deckViewModel.undrawCard(it)
+                        cardState.hideExtraContent()
                     }) {
                         Text(text = "Return card to deck")
                     }
