@@ -30,7 +30,9 @@ fun Deck() {
     }
     Box {
         Text(
-            modifier = Modifier.align(Alignment.TopStart).padding(5.dp),
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(5.dp),
             text = character.title,
             fontWeight = FontWeight.Bold
         )
@@ -90,7 +92,17 @@ fun Deck() {
             )
         }
         if (showCardHistory){
-            CardHistory(onClose = { showCardHistory = false }, deck = deck)
+            CardList(
+                onClose = { showCardHistory = false },
+                cards = deck.drawnCards(),
+                extraCardContent = {
+                    Button(onClick = {
+                        deckViewModel.undrawCard(it)
+                    }) {
+                        Text(text = "Return card to deck")
+                    }
+                }
+            )
         }
     }
 }
