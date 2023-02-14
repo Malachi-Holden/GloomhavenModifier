@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">Gloomhaven Modifier</string>
+    <string name="bonus_minuses">Bonus Minuses (scenario and item effects)</string>
+    <string name="shuffle_remaining">Shuffle remaining cards</string>
+    <string name="clean_deck">Clean Deck</string>
+    <string name="do_it">Do it</string>
+    <string name="cancel">Cancel</string>
+    <string name="clean_the_deck_question">Clean the deck?</string>
+    <string name="clean_deck_warning_body">This will remove any blesses, curses, or bonus -1s (e.g. from scenario effects)</string>
+    <string name="blesses">Blesses</string>
+    <string name="curses">Curses</string>
+    <string name="choose_class">Choose a new character class</string>
+    <string name="error_local_characters">Error loading local characters</string>
+    <string name="error_remote_characters">Error loading remote characters</string>
+    <string name="replace_character_question">Replace current character?</string>
+    <string name="replace_character_warning_body">This will override any saved progress on your current character and will reset the deck to unshuffled</string>
+    <string name="card_content_description">card: %1$s</string>
+    <string name="remaining_cards">remaining: %1$s</string>
+    <string name="no_cards_remaining">no cards remaining</string>
+    <string name="drawn_cards">"drawn: %1$s"</string>
+    <string name="empty_discard">empty discard</string>
+    <string name="shuffle">Shuffle</string>
+    <string name="draw">Draw</string>
+    <string name="needs_reshuffling">Needs Reshuffling!</string>
+    <string name="return_card">Return card to deck</string>
+    <string name="draw_this">Draw this card</string>
+    <string name="reveal_deck_question">Reveal Deck?</string>
+    <string name="reveal_deck_warning_body">This will spoil the contents of the deck. You should shuffle the remaining cards after doing this (for fairness)</string>
+    <string name="perksheet">Perksheet</string>
+    <string name="bonus_actions_image_desc">bonus actions</string>
+    <string name="back_button_img_desc">back</string>
+    <string name="edit_character">Edit Character</string>
+    <string name="new_character">New Character Class</string>
 </resources>

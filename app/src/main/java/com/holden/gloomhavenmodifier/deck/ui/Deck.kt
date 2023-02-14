@@ -11,12 +11,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.holden.gloomhavenmodifier.LocalComponentActivity
+import com.holden.gloomhavenmodifier.R
 import com.holden.gloomhavenmodifier.bonusActions.CurseAndBless
 import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterViewModel
 import com.holden.gloomhavenmodifier.deck.DeckRepository
@@ -62,41 +64,41 @@ fun Deck() {
                 .aspectRatio(CARD_ASPECT_RATIO)
                 .padding(10.dp)
 
-            Text(text = "remaining: ${deck.remaining()}")
+            Text(text = stringResource(id = R.string.remaining_cards, deck.remaining()))
             if (deck.remaining() > 0) {
                 BackOfCard(modifier = cardModifier.combinedClickable(
                     onClick = {},
                     onLongClick = { showRevealDeckWarning = true }
                 ))
             } else {
-                CardSlot(modifier = cardModifier, text = "no cards remaining")
+                CardSlot(modifier = cardModifier, text = stringResource(R.string.no_cards_remaining))
             }
 
-            Text(text = "drawn: ${deck.drawn()}")
+            Text(text = stringResource(id = R.string.drawn_cards, deck.drawn()))
             deck.mostRecentlyPlayed()?.let {
                 Card(
                     modifier = cardModifier.clickable { showCardHistory = true  },
                     card = it)
             }
             if (deck.mostRecentlyPlayed() == null) {
-                CardSlot(modifier = cardModifier, text = "empty discard")
+                CardSlot(modifier = cardModifier, text = stringResource(R.string.empty_discard))
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
                 Button(onClick = { deckViewModel.shuffle() }) {
-                    Text(text = "Shuffle")
+                    Text(text = stringResource(R.string.shuffle))
                 }
                 Button(onClick = { deckViewModel.draw() }) {
-                    Text(text = "Draw")
+                    Text(text = stringResource(R.string.draw))
                 }
             }
             Text(
                 color = Color.Red,
                 fontWeight = FontWeight.Bold,
                 fontSize = 30.sp,
-                text = if (deck.needsShuffle) "Needs Reshuffling!" else ""
+                text = if (deck.needsShuffle) stringResource(R.string.needs_reshuffling) else ""
             )
 
             CurseAndBless(
@@ -147,7 +149,7 @@ private fun DiscardPile(
                         deckViewModel.undrawCard(it)
                         cardState.hideExtraContent()
                     }) {
-                        Text(text = "Return card to deck")
+                        Text(text = stringResource(R.string.return_card))
                     }
                 }
             )
@@ -179,7 +181,7 @@ private fun RemainingCards(
                             deckViewModel.draw(it + deck.drawn())
                             cardState.hideExtraContent()
                         }) {
-                            Text(text = "Draw this card")
+                            Text(text = stringResource(R.string.draw_this))
                         }
                     }
                 )
@@ -188,7 +190,7 @@ private fun RemainingCards(
                     cardState.hideExtraContent()
                     onClose()
                 }) {
-                    Text(text = "Shuffle remaining cards")
+                    Text(text = stringResource(id = R.string.shuffle_remaining))
                 }
             }
         }
@@ -205,19 +207,19 @@ fun DeckRevealConfirmationDialogue(visible: Boolean, modifier: Modifier = Modifi
             onDismissRequest = onCancel,
             confirmButton = {
                 Button(onClick = onConfirmed) {
-                    Text(text = "Do it")
+                    Text(text = stringResource(R.string.do_it))
                 }
             },
             dismissButton = {
                 Button(onClick = onCancel) {
-                    Text(text = "Cancel")
+                    Text(text = stringResource(R.string.cancel))
                 }
             },
             title = {
-                Text(text = "Reveal Deck?")
+                Text(text = stringResource(R.string.reveal_deck_question))
             },
             text = {
-                Text(text = "This will spoil the contents of the deck. You should shuffle the remaining cards after doing this (for fairness)")
+                Text(text = stringResource(R.string.reveal_deck_warning_body))
             }
         )
     }

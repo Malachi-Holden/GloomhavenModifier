@@ -12,9 +12,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.holden.gloomhavenmodifier.LocalComponentActivity
+import com.holden.gloomhavenmodifier.R
 import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterState
 import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterViewModel
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
@@ -32,10 +34,10 @@ fun ChooseCharacter(
     }
     Box {
         Column(modifier = Modifier.fillMaxSize()) {
-            Text(text = "Choose a new character class", fontWeight = FontWeight.Bold)
+            Text(text = stringResource(R.string.choose_class), fontWeight = FontWeight.Bold)
             when (val local = viewModel.localCharacterListState.collectAsState().value){
                 is CharacterState.Loading -> CircularProgressIndicator()
-                is CharacterState.Error -> Text(text = "Error loading local characters")
+                is CharacterState.Error -> Text(text = stringResource(R.string.error_local_characters))
                 is CharacterState.Loaded -> CharacterOptions(characters = local.characters, onChooseCharacter = {
                     chosenCharacter = it
                     showChosenCharacterConfirmation = true
@@ -43,7 +45,7 @@ fun ChooseCharacter(
             }
             when (val remote = viewModel.remoteCharacterListState.collectAsState().value){
                 is CharacterState.Loading -> CircularProgressIndicator()
-                is CharacterState.Error -> Text(text = "Error loading remote characters")
+                is CharacterState.Error -> Text(text = stringResource(R.string.error_remote_characters))
                 is CharacterState.Loaded -> CharacterOptions(characters = remote.characters, onChooseCharacter = {
                     chosenCharacter = it
                     showChosenCharacterConfirmation = true
@@ -80,19 +82,19 @@ fun CharacterChoiceConfirmationDialogue(modifier: Modifier = Modifier, onCancel:
         onDismissRequest = onCancel,
         confirmButton = {
             Button(onClick = onChosen) {
-                Text(text = "Do it")
+                Text(text = stringResource(R.string.do_it))
             }
         },
         dismissButton = {
             Button(onClick = onCancel) {
-                Text(text = "Cancel")
+                Text(text = stringResource(R.string.cancel))
             }
         },
         title = {
-            Text(text = "Replace current character?")
+            Text(text = stringResource(R.string.replace_character_question))
         },
         text = {
-            Text(text = "This will override any saved progress on your current character and will reset the deck to unshuffled")
+            Text(text = stringResource(R.string.replace_character_warning_body))
         }
     )
 }

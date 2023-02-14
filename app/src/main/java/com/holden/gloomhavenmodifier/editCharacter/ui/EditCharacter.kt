@@ -9,11 +9,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.holden.gloomhavenmodifier.LocalComponentActivity
+import com.holden.gloomhavenmodifier.R
 import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterViewModel
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import com.holden.gloomhavenmodifier.editCharacter.model.Perk
@@ -43,7 +45,7 @@ fun EditCharacter(onSave: (CharacterModel)->Unit) {
                 fontWeight = FontWeight.Bold,
             )
 
-            Text(text = "Perksheet")
+            Text(text = stringResource(R.string.perksheet))
             LazyColumn {
                 items(character.perks) { perk ->
                     PerkCheckRow(
@@ -66,7 +68,7 @@ fun EditCharacter(onSave: (CharacterModel)->Unit) {
                 onDismissRequest = { showSaveConfirmationDialogue = false },
                 dismissButton = {
                     Button(onClick = { showSaveConfirmationDialogue = false }) {
-                        Text(text = "Cancel")
+                        Text(text = stringResource(R.string.cancel))
                     }
                 },
                 confirmButton = {
@@ -77,7 +79,7 @@ fun EditCharacter(onSave: (CharacterModel)->Unit) {
                             )
                         )
                     }) {
-                        Text(text = "Do it")
+                        Text(text = stringResource(R.string.do_it))
                     }
                 },
                 title = {

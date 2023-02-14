@@ -9,16 +9,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.holden.gloomhavenmodifier.LocalComponentActivity
+import com.holden.gloomhavenmodifier.R
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
 import com.holden.gloomhavenmodifier.util.ui.NumberPicker
 
 @Composable
 fun BonusActions(
-//    viewModel: DeckViewModel,
     showCleanDeckDialog: ()->Unit
 ){
     val viewModel: DeckViewModel = hiltViewModel(LocalComponentActivity.current)
@@ -46,15 +47,15 @@ fun BonusActions(
                 value = deck.bonusMinuses,
                 onUp = { viewModel.insertBonusMinus() },
                 onDown = { viewModel.removeBonusMinus() })
-            Text(text = "Bonus Minuses (scenario and item effects)")
+            Text(text = stringResource(R.string.bonus_minuses))
         }
 
         Button(onClick = { viewModel.shuffleRemainingCards() }) {
-            Text(text = "Shuffle remaining cards")
+            Text(text = stringResource(R.string.shuffle_remaining))
         }
 
         Button(onClick = showCleanDeckDialog) {
-            Text(text = "Clean Deck")
+            Text(text = stringResource(R.string.clean_deck))
         }
     }
 }
@@ -67,19 +68,19 @@ fun CleanDeckConfirmation(modifier: Modifier = Modifier, onCancel: ()->Unit, onC
         onDismissRequest = onCancel,
         confirmButton = {
             Button(onClick = onConfirm) {
-                Text(text = "Do it")
+                Text(text = stringResource(R.string.do_it))
             }
         },
         dismissButton = {
             Button(onClick = onCancel) {
-                Text(text = "Cancel")
+                Text(text = stringResource(R.string.cancel))
             }
         },
         title = {
-            Text(text = "Clean the deck?")
+            Text(text = stringResource(R.string.clean_the_deck_question))
         },
         text = {
-            Text(text = "This will remove any blesses, curses, or bonus -1s (e.g. from scenario effects)")
+            Text(text = stringResource(R.string.clean_deck_warning_body))
         }
     )
 }
