@@ -1,7 +1,10 @@
 package com.holden.gloomhavenmodifier.deck.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -15,8 +18,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.holden.gloomhavenmodifier.LocalComponentActivity
 import com.holden.gloomhavenmodifier.bonusActions.CurseAndBless
 import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterViewModel
+import com.holden.gloomhavenmodifier.deck.model.DeckModel
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
+import com.holden.gloomhavenmodifier.util.ui.ClosableOverlay
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Deck() {
     val deckViewModel: DeckViewModel = hiltViewModel(LocalComponentActivity.current)
@@ -28,7 +34,12 @@ fun Deck() {
     var showCardHistory by remember {
         mutableStateOf(false)
     }
-    val cardState = rememberCardState()
+    var showDeckInternal by remember {
+        mutableStateOf(false)
+    }
+    var showRevealDeckWarning by remember {
+        mutableStateOf(false)
+    }
     Box {
         Text(
             modifier = Modifier
@@ -51,7 +62,10 @@ fun Deck() {
 
             Text(text = "remaining: ${deck.remaining()}")
             if (deck.remaining() > 0) {
-                BackOfCard(modifier = cardModifier)
+                BackOfCard(modifier = cardModifier.combinedClickable(
+                    onClick = {},
+                    onLongClick = { showRevealDeckWarning = true }
+                ))
             } else {
                 CardSlot(modifier = cardModifier, text = "no cards remaining")
             }
@@ -92,11 +106,40 @@ fun Deck() {
                 removeCurse = { deckViewModel.removeCurse() }
             )
         }
-        if (showCardHistory){
+
+        DiscardPile(showCardHistory, deck, deckViewModel, onClose = { showCardHistory = false })
+
+        DeckRevealConfirmationDialogue(
+            visible = showRevealDeckWarning,
+            modifier = Modifier.align(Alignment.Center),
+            onCancel = { showRevealDeckWarning = false },
+            onConfirmed = {
+                showRevealDeckWarning = false
+                showDeckInternal = true
+            }
+        )
+
+        RemainingCards(showDeckInternal, deck, deckViewModel, onClose = { showDeckInternal = false })
+    }
+}
+
+@Composable
+private fun DiscardPile(
+    showCardHistory: Boolean,
+    deck: DeckModel,
+    deckViewModel: DeckViewModel,
+    onClose: () -> Unit
+) {
+    if (showCardHistory) {
+        val cardState = rememberCardState()
+        ClosableOverlay(onClose = {
+            cardState.hideExtraContent()
+            onClose()
+        }) {
             CardList(
-                onClose = { showCardHistory = false },
                 cards = deck.drawnCards(),
                 cardState = cardState,
+                reverseLayout = true,
                 extraCardContent = {
                     Button(onClick = {
                         deckViewModel.undrawCard(it)
@@ -108,6 +151,65 @@ fun Deck() {
             )
         }
     }
+}
+
+@Composable
+private fun RemainingCards(
+    showDeckInternal: Boolean,
+    deck: DeckModel,
+    deckViewModel: DeckViewModel,
+    onClose: ()->Unit
+) {
+    if (showDeckInternal) {
+        val cardState = rememberCardState()
+        ClosableOverlay(onClose = {
+            cardState.hideExtraContent()
+            onClose()
+        }) {
+            CardList(
+                cards = deck.remainingCards(),
+                cardState = cardState,
+                reverseLayout = false,
+                extraCardContent = {
+                    Button(onClick = {
+                        deckViewModel.draw(it)
+                        cardState.hideExtraContent()
+                    }) {
+                        Text(text = "Draw this card")
+                    }
+                }
+            )
+        }
+
+    }
+}
+
+
+@Composable
+fun DeckRevealConfirmationDialogue(visible: Boolean, modifier: Modifier = Modifier, onCancel: ()->Unit, onConfirmed: () -> Unit){
+    if (visible){
+        AlertDialog(
+            modifier = modifier,
+            onDismissRequest = onCancel,
+            confirmButton = {
+                Button(onClick = onConfirmed) {
+                    Text(text = "Do it")
+                }
+            },
+            dismissButton = {
+                Button(onClick = onCancel) {
+                    Text(text = "Cancel")
+                }
+            },
+            title = {
+                Text(text = "Reveal Deck?")
+            },
+            text = {
+                Text(text = "This will spoil the contents of the deck. You should shuffle the remaining cards after doing this (for fairness)")
+            }
+        )
+    }
+
 }
 
 @Composable
