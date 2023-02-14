@@ -10,17 +10,17 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 enum class BaseCard(val card: CardModel){
-    BackOfCard(CardModel("back of card", "back", null, false)),
-    Zero(CardModel("+ 0", "zero", null, false)),
-    One(CardModel("+ 1", "one", null, false)),
-    MinusOne(CardModel("- 1", "minus_one", null, false)),
-    MinusTwo(CardModel("- 2", "minus_two", null, false)),
-    Two(CardModel("+ 2", "two", null, false)),
-    Miss(CardModel("Ø", "miss", null, true)),
-    Crit(CardModel("x 2", "crit", null, true)),
-    Curse(CardModel("curse", "curse", null, false)),
-    Bless(CardModel("bless", "bless", null, false)),
-    BonusMinus(CardModel("*- 1", "scenario_effect_minus_1", null, false))
+    BackOfCard(CardModel("back of card", "back", false)),
+    Zero(CardModel("+ 0", "zero", false)),
+    One(CardModel("+ 1", "one",  false)),
+    MinusOne(CardModel("- 1", "minus_one", false)),
+    MinusTwo(CardModel("- 2", "minus_two", false)),
+    Two(CardModel("+ 2", "two", false)),
+    Miss(CardModel("Ø", "miss", true)),
+    Crit(CardModel("x 2", "crit", true)),
+    Curse(CardModel("curse", "curse", false)),
+    Bless(CardModel("bless", "bless", false)),
+    BonusMinus(CardModel("*- 1", "scenario_effect_minus_1", false))
 }
 
 fun CardModel.isBless() = (description == BaseCard.Bless.card.description)

@@ -43,14 +43,6 @@ fun ChooseCharacter(
                     showChosenCharacterConfirmation = true
                 })
             }
-            when (val remote = viewModel.remoteCharacterListState.collectAsState().value){
-                is CharacterState.Loading -> CircularProgressIndicator()
-                is CharacterState.Error -> Text(text = stringResource(R.string.error_remote_characters))
-                is CharacterState.Loaded -> CharacterOptions(characters = remote.characters, onChooseCharacter = {
-                    chosenCharacter = it
-                    showChosenCharacterConfirmation = true
-                })
-            }
         }
         if(showChosenCharacterConfirmation) {
             CharacterChoiceConfirmationDialogue(

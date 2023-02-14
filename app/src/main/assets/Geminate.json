@@ -3,49 +3,41 @@
   "specialtyCards": [
     {
       "description": "Geminate: +0",
-      "resourceType": "local",
       "imageRes": "geminate_plus0",
       "reshuffle": false
     },
     {
       "description": "Geminate: +0& consume any element to make any element",
-      "resourceType": "local",
       "imageRes": "geminate_replace_element",
       "reshuffle": false
     },
     {
       "description": "Geminate: +1&wound",
-      "resourceType": "local",
       "imageRes": "geminate_plus1_wound",
       "reshuffle": false
     },
     {
       "description": "Geminate: +1&poison",
-      "resourceType": "local",
       "imageRes": "geminate_plus1_poison",
       "reshuffle": false
     },
     {
       "description": "Geminate: rolling pierce(3)",
-      "resourceType": "local",
       "imageRes": "geminate_rolling_pierce3",
       "reshuffle": false
     },
     {
       "description": "Geminate: +1&push(3)",
-      "resourceType": "local",
       "imageRes": "geminate_plus1_push3",
       "reshuffle": false
     },
     {
       "description": "Geminate: rolling +1 regenerate(self)",
-      "resourceType": "local",
       "imageRes": "geminate_plus1_regenerate",
       "reshuffle": false
     },
     {
       "description": "Geminate: (X2)&Brittle(self)",
-      "resourceType": "local",
       "imageRes": "geminate_2x_brittle",
       "reshuffle": false
     }

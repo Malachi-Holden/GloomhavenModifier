@@ -3,49 +3,41 @@
   "specialtyCards": [
     {
       "description": "Drifter: +1",
-      "resourceType": "local",
       "imageRes": "drifter_plus1",
       "reshuffle": false
     },
     {
       "description": "Drifter: +0",
-      "resourceType": "local",
       "imageRes": "drifter_zero",
       "reshuffle": false
     },
     {
       "description": "Drifter: +0&move one character token back one slot",
-      "resourceType": "local",
       "imageRes": "drifter_move_token",
       "reshuffle": false
     },
     {
       "description": "Drifter: rolling pierce(3)",
-      "resourceType": "local",
       "imageRes": "drifter_rolling_pierce3",
       "reshuffle": false
     },
     {
       "description": "Drifter: rolling push(2)",
-      "resourceType": "local",
       "imageRes": "drifter_rolling_push2",
       "reshuffle": false
     },
     {
       "description": "Drifter: +3",
-      "resourceType": "local",
       "imageRes": "drifter_plus3",
       "reshuffle": false
     },
     {
       "description": "Drifter: +2 & immobilize",
-      "resourceType": "local",
       "imageRes": "drifter_plus2_immobilize",
       "reshuffle": false
     },
     {
       "description": "Drifter: rolling heal(1,self)",
-      "resourceType": "local",
       "imageRes": "drifter_heal1",
       "reshuffle": false
     }

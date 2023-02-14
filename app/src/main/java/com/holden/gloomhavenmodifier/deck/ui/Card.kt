@@ -28,21 +28,15 @@ fun Card(modifier: Modifier = Modifier, card: CardModel) {
 @Composable
 fun cardPainter(card: CardModel): Painter {
     val activity = LocalContext.current
-    if (card.resourceType == "url") {
-        return rememberAsyncImagePainter(model = card.imageUrl)
-    }
-    if (card.resourceType == "local") {
-        val id = activity.resources.getIdentifier(
-            card.imageRes,
-            "drawable",
-            "com.holden.gloomhavenmodifier"
-        )
-        if (id == 0) return painterResource(id = R.drawable.card_not_found)
-        return painterResource(
-            id = id
-        )
-    }
-    return painterResource(id = R.drawable.card_not_found)
+    val id = activity.resources.getIdentifier(
+        card.imageRes,
+        "drawable",
+        "com.holden.gloomhavenmodifier"
+    )
+    if (id == 0) return painterResource(id = R.drawable.card_not_found)
+    return painterResource(
+        id = id
+    )
 }
 
 @Composable
