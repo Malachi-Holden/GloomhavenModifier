@@ -29,6 +29,10 @@ class DeckViewModel @Inject constructor(deck: DeckModel): ViewModel() {
         _state.value = state.value.shuffled()
     }
 
+    fun shuffleRemainingCards(){
+        _state.value = state.value.shuffledRemaining()
+    }
+
     fun insertCurse(){
         _state.value = state.value.insertCurse()
     }

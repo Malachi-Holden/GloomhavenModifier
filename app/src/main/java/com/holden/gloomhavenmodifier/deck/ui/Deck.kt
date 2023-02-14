@@ -12,12 +12,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.holden.gloomhavenmodifier.LocalComponentActivity
 import com.holden.gloomhavenmodifier.bonusActions.CurseAndBless
 import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterViewModel
+import com.holden.gloomhavenmodifier.deck.DeckRepository
 import com.holden.gloomhavenmodifier.deck.model.DeckModel
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
 import com.holden.gloomhavenmodifier.util.ui.ClosableOverlay
@@ -166,19 +168,29 @@ private fun RemainingCards(
             cardState.hideExtraContent()
             onClose()
         }) {
-            CardList(
-                cards = deck.remainingCards(),
-                cardState = cardState,
-                reverseLayout = false,
-                extraCardContent = {
-                    Button(onClick = {
-                        deckViewModel.draw(it + deck.drawn())
-                        cardState.hideExtraContent()
-                    }) {
-                        Text(text = "Draw this card")
+            Column {
+                CardList(
+                    modifier = Modifier.weight(1.0f),
+                    cards = deck.remainingCards(),
+                    cardState = cardState,
+                    reverseLayout = false,
+                    extraCardContent = {
+                        Button(onClick = {
+                            deckViewModel.draw(it + deck.drawn())
+                            cardState.hideExtraContent()
+                        }) {
+                            Text(text = "Draw this card")
+                        }
                     }
+                )
+                Button(onClick = {
+                    deckViewModel.shuffleRemainingCards()
+                    cardState.hideExtraContent()
+                    onClose()
+                }) {
+                    Text(text = "Shuffle remaining cards")
                 }
-            )
+            }
         }
 
     }
@@ -222,4 +234,11 @@ fun CardSlot(
     ){
         Text(modifier = Modifier.align(Alignment.Center), text = text, fontSize = 15.sp, fontWeight = FontWeight.Bold)
     }
+}
+
+@Preview
+@Composable
+fun RemainingCardsPreview(){
+    val deck = DeckRepository.getDefaultDeck()
+    RemainingCards(showDeckInternal = true, deck = deck, deckViewModel = DeckViewModel(deck), onClose = {})
 }

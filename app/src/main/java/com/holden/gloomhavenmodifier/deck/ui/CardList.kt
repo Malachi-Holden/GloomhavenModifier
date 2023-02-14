@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CardList(
+    modifier: Modifier = Modifier,
     cards: List<CardModel>,
     reverseLayout: Boolean,
     cardState: CardState = rememberCardState(),
@@ -24,7 +25,7 @@ fun CardList(
     val lazyListState = rememberLazyListState()
     val scope = rememberCoroutineScope()
     var focusedCard by (cardState as CardListCardState).focusedCard
-    LazyColumn(state = lazyListState, reverseLayout = reverseLayout) {
+    LazyColumn(modifier = modifier, state = lazyListState, reverseLayout = reverseLayout) {
         items(cards.size){
             Column(modifier = Modifier.combinedClickable(onClick = {}, onLongClick = {
                 focusedCard = if (focusedCard == it) {
