@@ -4,13 +4,11 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.holden.gloomhavenmodifier.deck.model.CardModel
-import com.holden.gloomhavenmodifier.util.ui.ClosableOverlay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)

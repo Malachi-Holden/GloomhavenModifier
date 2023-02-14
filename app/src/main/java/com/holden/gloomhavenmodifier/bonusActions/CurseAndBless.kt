@@ -7,6 +7,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.holden.gloomhavenmodifier.R
 import com.holden.gloomhavenmodifier.util.ui.NumberPicker
 
 @Composable
@@ -31,7 +33,7 @@ fun CurseAndBless(
                 value = blesses,
                 onUp = { addBless() },
                 onDown = { removeBless() })
-            Text(text = "Blesses")
+            Text(text = stringResource(R.string.blesses))
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -41,7 +43,7 @@ fun CurseAndBless(
                 value = curses,
                 onUp = { addCurse() },
                 onDown = { removeCurse() })
-            Text(text = "Curses")
+            Text(text = stringResource(R.string.curses))
         }
     }
 }

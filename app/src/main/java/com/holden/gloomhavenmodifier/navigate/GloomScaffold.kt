@@ -8,11 +8,13 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.holden.gloomhavenmodifier.LocalComponentActivity
+import com.holden.gloomhavenmodifier.R
 import com.holden.gloomhavenmodifier.bonusActions.BonusActions
 import com.holden.gloomhavenmodifier.bonusActions.CleanDeckConfirmation
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
@@ -45,7 +47,7 @@ fun GloomScaffold() {
                                     scaffoldState.drawerState.open()
                                 }
                             }) {
-                                Icon(Icons.Default.Menu, "bonus actions")
+                                Icon(Icons.Default.Menu, stringResource(R.string.bonus_actions_image_desc))
                             }
                         }
                     }
@@ -53,7 +55,7 @@ fun GloomScaffold() {
                     GloomDestination.ChooseCharacter.name -> {
                         {
                             IconButton(onClick = { scope.launch { navController.popBackStack() } }) {
-                                Icon(Icons.Default.ArrowBack, "back")
+                                Icon(Icons.Default.ArrowBack, stringResource(R.string.back_button_img_desc))
                             }
                         }
                     }
@@ -66,14 +68,14 @@ fun GloomScaffold() {
                                 GloomDestination.Character.name
                             )
                         }) {
-                            Text(text = "Edit Character")
+                            Text(text = stringResource(R.string.edit_character))
                         }
                         GloomDestination.Character.name -> Button(onClick = {
                             navController.navigate(
                                 GloomDestination.ChooseCharacter.name
                             )
                         }) {
-                            Text(text = "New Character Class")
+                            Text(text = stringResource(R.string.new_character))
                         }
                     }
                 }

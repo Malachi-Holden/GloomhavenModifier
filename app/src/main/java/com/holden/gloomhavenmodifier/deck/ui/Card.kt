@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import coil.compose.rememberAsyncImagePainter
 import com.holden.gloomhavenmodifier.R
 import com.holden.gloomhavenmodifier.deck.BaseCard
@@ -19,7 +20,7 @@ fun Card(modifier: Modifier = Modifier, card: CardModel) {
     Image(
         modifier = modifier,
         painter = cardPainter(card = card),
-        contentDescription = "card: ${card.description}",
+        contentDescription = stringResource(id = R.string.card_content_description, card.description),
         contentScale = ContentScale.FillWidth
     )
 }
