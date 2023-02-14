@@ -3,7 +3,6 @@ package com.holden.gloomhavenmodifier.chooseCharacter.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.holden.gloomhavenmodifier.editCharacter.BuiltInCharacterRepo
-import com.holden.gloomhavenmodifier.editCharacter.RemoteCharacterRepo
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,14 +13,10 @@ import javax.inject.Inject
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
     initialCharacter: CharacterModel,
-    val localRepo: BuiltInCharacterRepo,
-    val remoteRepo: RemoteCharacterRepo
+    val localRepo: BuiltInCharacterRepo
 ): ViewModel() {
     private var _localCharacterListState = MutableStateFlow<CharacterState>(CharacterState.Loading)
     val localCharacterListState = _localCharacterListState.asStateFlow()
-
-    private var _remoteCharacterListState = MutableStateFlow<CharacterState>(CharacterState.Loading)
-    val remoteCharacterListState = _remoteCharacterListState.asStateFlow()
 
     private var _currentCharacterState = MutableStateFlow(initialCharacter)
     val currentCharacterState = _currentCharacterState.asStateFlow()
@@ -29,9 +24,6 @@ class CharacterViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _localCharacterListState.value = localRepo.getCharacters()
-        }
-        viewModelScope.launch {
-            _remoteCharacterListState.value = remoteRepo.getCharacters()
         }
     }
 

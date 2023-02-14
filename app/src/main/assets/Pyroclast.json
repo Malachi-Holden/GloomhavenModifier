@@ -3,38 +3,32 @@
   "specialtyCards": [
     {
       "description": "Pyroclast: +0&create one 1-hex hazardous terrain tile",
-      "resourceType": "remote",
-      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_create_hazardous.png?raw=true",
+      "imageRes": "pyroclast_create_hazardous",
       "reshuffle": false
     },
     {
       "description": "Pyroclast: +1&wound",
-      "resourceType": "remote",
-      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_plus1_wound.png?raw=true",
+      "imageRes": "pyroclast_plus1_wound",
       "reshuffle": false
     },
     {
       "description": "Pyroclast: +0&rolling push(2)",
-      "resourceType": "remote",
-      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_rolling_push2.png?raw=true",
+      "imageRes": "pyroclast_rolling_push_2",
       "reshuffle": false
     },
     {
       "description": "Pyroclast: +1&rolling muddle",
-      "resourceType": "remote",
-      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_rolling_plus1_muddle.png?raw=true",
+      "imageRes": "pyroclast_rolling_plus1_muddle",
       "reshuffle": false
     },
     {
       "description": "Pyroclast: +2",
-      "resourceType": "remote",
-      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_plus2.png?raw=true",
+      "imageRes": "pyroclast_plus2",
       "reshuffle": false
     },
     {
       "description": "Pyroclast: +1& infuse(earth or fire)",
-      "resourceType": "remote",
-      "imageUrl": "https://github.com/Malachi-Holden/GloomhavenModifier/blob/master/remoteAssets/modifierImages/pyroclast_plus1_fire_earth.png?raw=true",
+      "imageRes": "pyroclast_plus1_fire_earth",
       "reshuffle": false
     }
   ],

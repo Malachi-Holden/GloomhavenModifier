@@ -6,8 +6,6 @@ import kotlinx.serialization.Serializable
 data class CardModel (
     val description: String,
     val imageRes: String? = null,
-    val imageUrl: String? = null,
-    val reshuffle: Boolean,
-    val resourceType: String = "local"
+    val reshuffle: Boolean
 )
 
