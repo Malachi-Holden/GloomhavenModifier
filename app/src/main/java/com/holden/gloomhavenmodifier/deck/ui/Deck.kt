@@ -172,7 +172,7 @@ private fun RemainingCards(
                 reverseLayout = false,
                 extraCardContent = {
                     Button(onClick = {
-                        deckViewModel.draw(it)
+                        deckViewModel.draw(it + deck.drawn())
                         cardState.hideExtraContent()
                     }) {
                         Text(text = "Draw this card")

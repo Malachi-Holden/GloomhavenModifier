@@ -1,8 +1,8 @@
 package com.holden.gloomhavenmodifier
 
-import com.holden.gloomhavenmodifier.deck.getDefaultDeck
 import com.holden.gloomhavenmodifier.deck.isCurse
 import com.holden.gloomhavenmodifier.deck.model.DeckModel
+import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -13,7 +13,7 @@ class DeckModelTest {
 
     @Before
     fun setup(){
-        deck = getDefaultDeck()
+        deck = CharacterModel.NoClass.buildDeck()
     }
 
     @Test
@@ -43,6 +43,17 @@ class DeckModelTest {
         assertEquals("the deck should have no extra cards", 20, deck.cards.size)
         assertEquals("the remaining should have no extra cards", 18, deck.remainingCards().size)
         assertEquals("the drawn should have no extra cards", 2, deck.drawnCards().size)
+    }
 
+    @Test
+    fun testDrawCardAt(){
+        repeat(20) {
+            val deck2 = deck.draw(it)
+            assertEquals(
+                "most recently played card should be the drawn card (${it})",
+                deck.cards[it],
+                deck2.mostRecentlyPlayed()
+            )
+        }
     }
 }
