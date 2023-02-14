@@ -21,8 +21,16 @@ class DeckViewModel @Inject constructor(deck: DeckModel): ViewModel() {
         _state.value = state.value.draw()
     }
 
+    fun draw(at: Int){
+        _state.value = state.value.draw(at)
+    }
+
     fun shuffle(){
         _state.value = state.value.shuffled()
+    }
+
+    fun shuffleRemainingCards(){
+        _state.value = state.value.shuffledRemaining()
     }
 
     fun insertCurse(){
@@ -51,6 +59,10 @@ class DeckViewModel @Inject constructor(deck: DeckModel): ViewModel() {
 
     fun removeBonusMinus(){
         _state.value = state.value.removeScenarioMinus()
+    }
+
+    fun undrawCard(at: Int){
+        _state.value = state.value.unDrawCard(at)
     }
 
     class Factory(val deckModel: DeckModel): ViewModelProvider.Factory{

@@ -1,9 +1,7 @@
 package com.holden.gloomhavenmodifier.deck.model
 
 import com.holden.gloomhavenmodifier.deck.*
-import com.holden.gloomhavenmodifier.util.added
-import com.holden.gloomhavenmodifier.util.removedFirst
-import com.holden.gloomhavenmodifier.util.toInt
+import com.holden.gloomhavenmodifier.util.*
 import kotlinx.serialization.Serializable
 import kotlin.math.max
 
@@ -44,20 +42,56 @@ data class DeckModel(
         )
     } else {
         val shuffled = shuffled()
-        shuffled().copy(position = 1, needsShuffle = shuffled.cards[0].reshuffle)
+        shuffled.copy(position = 1, needsShuffle = shuffled.cards[0].reshuffle)
     }
 
-    fun shuffled() = DeckModel(
-        (remainingCards() + drawnCards().filter { !it.oneTimeUse() })
+    /**
+     * Draws a card from specified position `at` and puts it in the discard pile
+     */
+    fun draw(at: Int)  = cards.moved(at, position).let { cards->
+        copy(
+            cards = cards,
+            needsShuffle = needsShuffle || cards[position].reshuffle,
+            curses = cards.count(position + 1, cards.size){it.isCurse()},
+            blesses = cards.count(position + 1, cards.size){it.isBless()},
+            position = position + 1
+        )
+    }.shuffledRemaining()
+
+    fun shuffled() = copy(
+        cards = (remainingCards() + drawnCards().filter { !it.oneTimeUse() })
             .shuffled(),
-        0,
-        false,
-        remainingCards().count { it.isCurse() },
-        remainingCards().count { it.isBless() }
+        position =0,
+        needsShuffle = false,
+        blesses = remainingCards().count { it.isCurse() },
+        curses = remainingCards().count { it.isBless() }
     )
 
+    fun shuffledRemaining() = copy(
+        cards = drawnCards() + remainingCards().shuffled()
+    )
+
+    /**
+     * Removes a card from the discarded cards and returns it to the remaining undrawn cards
+     */
+    fun unDrawCard(at: Int) = cards.moved(at, cards.size).let { cards->
+        copy(
+            cards = cards,
+            curses = cards.count(position - 1, cards.size){it.isCurse()},
+            blesses = cards.count(position - 1, cards.size){it.isBless()},
+            position = position - 1,
+            needsShuffle = cards.any(0, position - 1) { it.reshuffle }
+        )
+    }.shuffledRemaining()
+
+    /**
+     * Inserts a card into the remaining unplayed cards
+     */
     fun insertUnplayed(card: CardModel) = copy(cards = drawnCards() + remainingCards().added(card).shuffled())
 
+    /**
+     * Removes a card from the remaining unplayed cards
+     */
     fun removeUnplayed(card: CardModel) = copy(
         cards = drawnCards() + remainingCards().removedFirst { it.description == card.description }
     )

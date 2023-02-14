@@ -29,7 +29,6 @@ fun BonusActions(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         CurseAndBless(
             blesses = deck.blesses,
             curses = deck.curses,
@@ -48,6 +47,10 @@ fun BonusActions(
                 onUp = { viewModel.insertBonusMinus() },
                 onDown = { viewModel.removeBonusMinus() })
             Text(text = "Bonus Minuses (scenario and item effects)")
+        }
+
+        Button(onClick = { viewModel.shuffleRemainingCards() }) {
+            Text(text = "Shuffle remaining cards")
         }
 
         Button(onClick = showCleanDeckDialog) {
