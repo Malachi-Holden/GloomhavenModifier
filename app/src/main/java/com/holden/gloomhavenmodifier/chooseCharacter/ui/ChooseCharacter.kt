@@ -1,8 +1,10 @@
 package com.holden.gloomhavenmodifier.chooseCharacter.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
@@ -12,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -32,9 +35,11 @@ fun ChooseCharacter(
     var showChosenCharacterConfirmation by remember {
         mutableStateOf(false)
     }
-    Box {
-        Column(modifier = Modifier.fillMaxSize()) {
-            Text(text = stringResource(R.string.choose_class), fontWeight = FontWeight.Bold)
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             when (val local = viewModel.localCharacterListState.collectAsState().value){
                 is CharacterState.Loading -> CircularProgressIndicator()
                 is CharacterState.Error -> Text(text = stringResource(R.string.error_local_characters))
@@ -56,11 +61,17 @@ fun ChooseCharacter(
 
 @Composable
 fun CharacterOptions(characters: List<CharacterModel>, onChooseCharacter: (CharacterModel)->Unit){
-    LazyColumn{
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
         items(characters){
-            Button(onClick = {
-                onChooseCharacter(it)
-            }) {
+            Button(
+                modifier = Modifier.fillMaxWidth(.65f),
+                onClick = {
+                    onChooseCharacter(it)
+                }
+            ) {
                 Text(text = it.title)
             }
         }

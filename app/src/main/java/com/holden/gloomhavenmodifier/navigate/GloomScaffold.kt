@@ -11,13 +11,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.holden.gloomhavenmodifier.LocalComponentActivity
 import com.holden.gloomhavenmodifier.R
 import com.holden.gloomhavenmodifier.bonusActions.BonusActions
 import com.holden.gloomhavenmodifier.bonusActions.CleanDeckConfirmation
+import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterState
+import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterViewModel
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
+import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,6 +33,8 @@ fun GloomScaffold() {
     val currentDestination = backStackEntry?.destination
 
     val deckViewModel: DeckViewModel = hiltViewModel(LocalComponentActivity.current)
+    val characterViewModel: CharacterViewModel = hiltViewModel(LocalComponentActivity.current)
+    val character by characterViewModel.currentCharacterState.collectAsState()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     var showCleanDeckConfirmation by remember {
         mutableStateOf(false)
@@ -45,33 +51,24 @@ fun GloomScaffold() {
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = currentDestination?.route ?: "Deck")
+                        Text(
+                            text = currentDestination?.scaffoldTitle(character) ?: "",
+                            style = MaterialTheme.typography.headlineMedium
+                        )
                     },
                     navigationIcon = {
-                        when (currentDestination?.route) {
-                            GloomDestination.Deck.name -> {
-                                IconButton(onClick = {
-                                    scope.launch {
-                                        drawerState.open()
-                                    }
-                                }) {
-                                    Icon(
-                                        Icons.Default.Menu,
-                                        stringResource(R.string.bonus_actions_image_desc)
-                                    )
+                        currentDestination?.currentIcon(
+                            onOpenBonusActions = {
+                                scope.launch {
+                                    drawerState.open()
+                                }
+                            },
+                            onBack = {
+                                scope.launch {
+                                    navController.popBackStack()
                                 }
                             }
-                            GloomDestination.Character.name,
-                            GloomDestination.ChooseCharacter.name -> {
-                                IconButton(onClick = { scope.launch { navController.popBackStack() } }) {
-                                    Icon(
-                                        Icons.Default.ArrowBack,
-                                        stringResource(R.string.back_button_img_desc)
-                                    )
-                                }
-                            }
-                            else -> {}
-                        }
+                        )
                     },
                     actions = {
                         when (currentDestination?.route) {
@@ -114,4 +111,40 @@ fun GloomScaffold() {
         }
     }
 
+}
+
+@Composable
+fun NavDestination.scaffoldTitle(currentCharacter: CharacterModel?) =
+    when(route){
+        GloomDestination.Deck.name,
+        GloomDestination.Character.name
+            -> currentCharacter?.title
+        GloomDestination.ChooseCharacter.name
+            -> stringResource(R.string.choose_character)
+        else -> ""
+    }
+
+
+@Composable
+fun NavDestination.currentIcon(onOpenBonusActions: ()->Unit, onBack: ()->Unit){
+    when (route) {
+        GloomDestination.Deck.name -> {
+            IconButton(onClick = onOpenBonusActions) {
+                Icon(
+                    Icons.Default.Menu,
+                    stringResource(R.string.bonus_actions_image_desc)
+                )
+            }
+        }
+        GloomDestination.Character.name,
+        GloomDestination.ChooseCharacter.name -> {
+            IconButton(onClick = onBack) {
+                Icon(
+                    Icons.Default.ArrowBack,
+                    stringResource(R.string.back_button_img_desc)
+                )
+            }
+        }
+        else -> {}
+    }
 }

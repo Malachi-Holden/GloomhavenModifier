@@ -1,5 +1,6 @@
 package com.holden.gloomhavenmodifier.util.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,18 +22,29 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun NumberPicker(modifier: Modifier = Modifier, value: Int, onUp: ()->Unit, onDown: ()->Unit){
-    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = modifier.background(
+            shape = MaterialTheme.shapes.small,
+            color = MaterialTheme.colorScheme.secondaryContainer
+        ),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         IconButton(
             onClick = onUp
         ) {
             Icon(
                 modifier = modifier.size(70.dp),
                 imageVector = Icons.Default.KeyboardArrowUp,
-                contentDescription = "add"
+                contentDescription = "add",
+                tint = MaterialTheme.colorScheme.onSecondaryContainer
             )
         }
 
-        Text(text = "$value", fontSize = 25.sp)
+        Text(
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            text = "$value",
+            style = MaterialTheme.typography.titleMedium
+        )
 
         IconButton(
             onClick = onDown
@@ -39,7 +52,8 @@ fun NumberPicker(modifier: Modifier = Modifier, value: Int, onUp: ()->Unit, onDo
             Icon(
                 modifier = modifier.size(70.dp),
                 imageVector = Icons.Default.KeyboardArrowDown,
-                contentDescription = "minus"
+                contentDescription = "minus",
+                tint = MaterialTheme.colorScheme.onSecondaryContainer
             )
         }
     }

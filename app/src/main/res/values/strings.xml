@@ -31,4 +31,5 @@
     <string name="back_button_img_desc">back</string>
     <string name="edit_character">Edit Character</string>
     <string name="new_character">New Character Class</string>
+    <string name="choose_character">Choose Character</string>
 </resources>

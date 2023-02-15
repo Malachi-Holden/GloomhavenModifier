@@ -6,6 +6,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -45,13 +46,6 @@ fun Deck() {
         mutableStateOf(false)
     }
     Box {
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(5.dp),
-            text = character.title,
-            fontWeight = FontWeight.Bold
-        )
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -87,17 +81,22 @@ fun Deck() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                Button(onClick = { deckViewModel.shuffle() }) {
+                Button(
+                    modifier = Modifier.padding(10.dp),
+                    onClick = { deckViewModel.shuffle() }
+                ) {
                     Text(text = stringResource(R.string.shuffle))
                 }
-                Button(onClick = { deckViewModel.draw() }) {
+                Button(
+                    modifier = Modifier.padding(10.dp),
+                    onClick = { deckViewModel.draw() }
+                ) {
                     Text(text = stringResource(R.string.draw))
                 }
             }
             Text(
-                color = Color.Red,
-                fontWeight = FontWeight.Bold,
-                fontSize = 30.sp,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.headlineMedium,
                 text = if (deck.needsShuffle) stringResource(R.string.needs_reshuffling) else ""
             )
 

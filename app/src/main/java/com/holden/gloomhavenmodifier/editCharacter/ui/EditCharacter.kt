@@ -39,13 +39,6 @@ fun EditCharacter(onSave: (CharacterModel)->Unit) {
 
     Box {
         Column(modifier = Modifier.fillMaxSize()) {
-            Text(
-                modifier = Modifier.padding(5.dp),
-                text = character.title,
-                fontWeight = FontWeight.Bold,
-            )
-
-            Text(text = stringResource(R.string.perksheet))
             LazyColumn {
                 items(character.perks) { perk ->
                     PerkCheckRow(
