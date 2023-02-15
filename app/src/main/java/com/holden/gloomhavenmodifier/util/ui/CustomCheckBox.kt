@@ -5,9 +5,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
+import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,12 +22,13 @@ import com.holden.gloomhavenmodifier.util.toInt
 @Composable
 fun CustomCheckBox(
     modifier: Modifier = Modifier,
-    color: Color = Color.Cyan,
+    color: Color = MaterialTheme.colorScheme.primary,
+    checkColor: Color = MaterialTheme.colorScheme.onPrimary,
     checked: Boolean,
     onCheckedChange: (Boolean)->Unit,
     enabled: Boolean = true
 ){
-    val borderColor = if(checked) Color.Transparent else Color.DarkGray
+    val borderColor = if(checked) Color.Transparent else color
     val borderWidth = 1.5*(!checked).toInt()
     Box(
         modifier = Modifier
@@ -46,7 +48,7 @@ fun CustomCheckBox(
                 modifier = Modifier.fillMaxSize(),
                 imageVector = Icons.Default.Check,
                 contentDescription = "checked icon",
-                tint = Color.White
+                tint = checkColor
             )
         }
     }
@@ -56,7 +58,6 @@ fun CustomCheckBox(
 @Composable
 fun CustomCheckBoxPreviewChecked(){
     Row(
-        modifier = Modifier.border(width = 2.dp, color = Color.Red),//.padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
@@ -70,7 +71,6 @@ fun CustomCheckBoxPreviewChecked(){
 fun CustomCheckBoxPreviewUnchecked(){
 
     Row(
-        modifier = Modifier.border(width = 5.dp, color = Color.Red),//.padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
