@@ -1,11 +1,13 @@
 package com.holden.gloomhavenmodifier.deck.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -13,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -21,7 +24,9 @@ import com.holden.gloomhavenmodifier.LocalComponentActivity
 import com.holden.gloomhavenmodifier.R
 import com.holden.gloomhavenmodifier.bonusActions.CurseAndBless
 import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterViewModel
+import com.holden.gloomhavenmodifier.deck.BaseCard
 import com.holden.gloomhavenmodifier.deck.DeckRepository
+import com.holden.gloomhavenmodifier.deck.model.CardModel
 import com.holden.gloomhavenmodifier.deck.model.DeckModel
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
 import com.holden.gloomhavenmodifier.util.ui.ClosableOverlay
@@ -31,9 +36,6 @@ import com.holden.gloomhavenmodifier.util.ui.ClosableOverlay
 fun Deck() {
     val deckViewModel: DeckViewModel = hiltViewModel(LocalComponentActivity.current)
     val deck by deckViewModel.state.collectAsState()
-
-    val characterViewModel: CharacterViewModel = hiltViewModel(LocalComponentActivity.current)
-    val character by characterViewModel.currentCharacterState.collectAsState()
 
     var showCardHistory by remember {
         mutableStateOf(false)
@@ -45,13 +47,6 @@ fun Deck() {
         mutableStateOf(false)
     }
     Box {
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(5.dp),
-            text = character.title,
-            fontWeight = FontWeight.Bold
-        )
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -63,41 +58,41 @@ fun Deck() {
                 .fillMaxHeight()
                 .aspectRatio(CARD_ASPECT_RATIO)
                 .padding(10.dp)
-
-            Text(text = stringResource(id = R.string.remaining_cards, deck.remaining()))
-            if (deck.remaining() > 0) {
-                BackOfCard(modifier = cardModifier.combinedClickable(
+            CardSlot(
+                modifier = cardModifier.combinedClickable(
                     onClick = {},
                     onLongClick = { showRevealDeckWarning = true }
-                ))
-            } else {
-                CardSlot(modifier = cardModifier, text = stringResource(R.string.no_cards_remaining))
-            }
-
-            Text(text = stringResource(id = R.string.drawn_cards, deck.drawn()))
-            deck.mostRecentlyPlayed()?.let {
-                Card(
-                    modifier = cardModifier.clickable { showCardHistory = true  },
-                    card = it)
-            }
-            if (deck.mostRecentlyPlayed() == null) {
-                CardSlot(modifier = cardModifier, text = stringResource(R.string.empty_discard))
-            }
+                ),
+                card = if (deck.remaining() > 0) BaseCard.BackOfCard.card else null,
+                numCards = deck.remaining(),
+                emptyText = stringResource(R.string.no_cards_remaining)
+            )
+            CardSlot(
+                modifier = cardModifier.clickable { showCardHistory = true  },
+                card = deck.mostRecentlyPlayed(),
+                numCards = deck.drawn(),
+                emptyText = stringResource(R.string.empty_discard)
+            )
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                Button(onClick = { deckViewModel.shuffle() }) {
+                Button(
+                    modifier = Modifier.padding(10.dp),
+                    onClick = { deckViewModel.shuffle() }
+                ) {
                     Text(text = stringResource(R.string.shuffle))
                 }
-                Button(onClick = { deckViewModel.draw() }) {
+                Button(
+                    modifier = Modifier.padding(10.dp),
+                    onClick = { deckViewModel.draw() }
+                ) {
                     Text(text = stringResource(R.string.draw))
                 }
             }
             Text(
-                color = Color.Red,
-                fontWeight = FontWeight.Bold,
-                fontSize = 30.sp,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.headlineMedium,
                 text = if (deck.needsShuffle) stringResource(R.string.needs_reshuffling) else ""
             )
 
@@ -229,12 +224,35 @@ fun DeckRevealConfirmationDialogue(visible: Boolean, modifier: Modifier = Modifi
 @Composable
 fun CardSlot(
     modifier: Modifier = Modifier,
-    text: String
+    emptyText: String,
+    card: CardModel?,
+    numCards: Int
 ){
     Box(
         modifier = modifier
     ){
-        Text(modifier = Modifier.align(Alignment.Center), text = text, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+        Text(modifier = Modifier.align(Alignment.Center),
+            text = emptyText,
+            style = MaterialTheme.typography.titleSmall,
+        )
+        if (card != null){
+            Card(card = card, modifier = modifier.align(Alignment.Center))
+        }
+
+        Text(
+            modifier = Modifier
+                .padding(5.dp)
+                .align(Alignment.BottomEnd)
+                .background(
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    shape = MaterialTheme.shapes.extraSmall
+                )
+                .defaultMinSize(minWidth = 25.dp)
+                .padding(5.dp),
+            style = MaterialTheme.typography.labelSmall,
+            textAlign = TextAlign.Center,
+            text = "$numCards"
+        )
     }
 }
 

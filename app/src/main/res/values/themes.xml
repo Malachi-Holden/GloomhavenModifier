@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.GloomhavenModifier" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/sea_foam</item>
+        <item name="android:statusBarColor">@color/leaves</item>
     </style>
 </resources>

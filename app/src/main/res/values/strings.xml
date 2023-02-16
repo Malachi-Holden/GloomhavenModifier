@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Gloomhaven Modifier</string>
-    <string name="bonus_minuses">Bonus Minuses (scenario and item effects)</string>
+    <string name="bonus_minuses">Bonus Minuses</string>
+    <string name="bonus_minuses_explanation">Scenario and item effects</string>
     <string name="shuffle_remaining">Shuffle remaining cards</string>
     <string name="clean_deck">Clean Deck</string>
     <string name="do_it">Do it</string>
@@ -30,5 +31,6 @@
     <string name="bonus_actions_image_desc">bonus actions</string>
     <string name="back_button_img_desc">back</string>
     <string name="edit_character">Edit Character</string>
-    <string name="new_character">New Character Class</string>
+    <string name="new_character">New Character</string>
+    <string name="choose_character">Choose Character</string>
 </resources>

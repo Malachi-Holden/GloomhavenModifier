@@ -3,11 +3,13 @@ package com.holden.gloomhavenmodifier.bonusActions
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.holden.gloomhavenmodifier.R
 import com.holden.gloomhavenmodifier.util.ui.NumberPicker
 
@@ -21,29 +23,27 @@ fun CurseAndBless(
     removeCurse: ()->Unit
 ){
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-            NumberPicker(
-                value = blesses,
-                onUp = { addBless() },
-                onDown = { removeBless() })
-            Text(text = stringResource(R.string.blesses))
-        }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-            NumberPicker(
-                value = curses,
-                onUp = { addCurse() },
-                onDown = { removeCurse() })
-            Text(text = stringResource(R.string.curses))
-        }
+        Text(
+            modifier = Modifier.padding(10.dp),
+            text = stringResource(R.string.blesses)
+        )
+        NumberPicker(
+            modifier = Modifier.padding(10.dp),
+            value = blesses,
+            onUp = { addBless() },
+            onDown = { removeBless() })
+        NumberPicker(
+            modifier = Modifier.padding(10.dp),
+            value = curses,
+            onUp = { addCurse() },
+            onDown = { removeCurse() })
+        Text(
+            modifier = Modifier.padding(10.dp),
+            text = stringResource(R.string.curses)
+        )
     }
+
 }
