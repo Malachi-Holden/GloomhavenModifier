@@ -1,5 +1,6 @@
 package com.holden.gloomhavenmodifier.navigate
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -72,18 +73,28 @@ fun GloomScaffold() {
                     },
                     actions = {
                         when (currentDestination?.route) {
-                            GloomDestination.Deck.name -> Button(onClick = {
-                                navController.navigate(
-                                    GloomDestination.Character.name
-                                )
-                            }) {
+                            GloomDestination.Deck.name -> Button(
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.secondary
+                                ),
+                                onClick = {
+                                    navController.navigate(
+                                        GloomDestination.Character.name
+                                    )
+                                }
+                            ) {
                                 Text(text = stringResource(R.string.edit_character))
                             }
-                            GloomDestination.Character.name -> Button(onClick = {
-                                navController.navigate(
-                                    GloomDestination.ChooseCharacter.name
-                                )
-                            }) {
+                            GloomDestination.Character.name -> Button(
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.secondary
+                                ),
+                                onClick = {
+                                    navController.navigate(
+                                        GloomDestination.ChooseCharacter.name
+                                    )
+                                }
+                            ) {
                                 Text(text = stringResource(R.string.new_character))
                             }
                         }

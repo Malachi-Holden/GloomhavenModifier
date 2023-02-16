@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -38,8 +39,8 @@ fun EditCharacter(onSave: (CharacterModel)->Unit) {
     }
 
     Box {
-        Column(modifier = Modifier.fillMaxSize()) {
-            LazyColumn {
+        Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
                 items(character.perks) { perk ->
                     PerkCheckRow(
                         perk = perk,
@@ -48,10 +49,15 @@ fun EditCharacter(onSave: (CharacterModel)->Unit) {
                     )
                 }
             }
-            Button(onClick = {
-                showSaveConfirmationDialogue = true
-            }) {
-                Text(text = "Save")
+            Button(
+                modifier = Modifier.fillMaxWidth(.65f),
+                onClick = {
+                    showSaveConfirmationDialogue = true
+                }) {
+                Text(
+                    style = MaterialTheme.typography.titleLarge,
+                    text = "Save"
+                )
             }
 
         }
@@ -90,7 +96,7 @@ fun EditCharacter(onSave: (CharacterModel)->Unit) {
 @Composable
 fun PerkCheckRow(perk: Perk, checked: Int, onCheckChanged: (Int)->Unit){
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.padding(5.dp).fillMaxWidth(),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -102,7 +108,7 @@ fun PerkCheckRow(perk: Perk, checked: Int, onCheckChanged: (Int)->Unit){
             )
         }
         Text(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.padding(10.dp).fillMaxWidth(),
             text = perk.description
         )
     }
@@ -114,5 +120,5 @@ fun PerkCheckRowPreview(){
     var checked by remember {
         mutableStateOf(2)
     }
-    PerkCheckRow(perk = Perk("", 3, listOf(), listOf()), checked = checked, onCheckChanged = { checked = it })
+    PerkCheckRow(perk = Perk("hello perks", 3, listOf(), listOf()), checked = checked, onCheckChanged = { checked = it })
 }
