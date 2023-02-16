@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 fun NumberPicker(modifier: Modifier = Modifier, value: Int, onUp: ()->Unit, onDown: ()->Unit){
     Column(
         modifier = modifier.background(
-            shape = MaterialTheme.shapes.small,
+            shape = MaterialTheme.shapes.large,
             color = MaterialTheme.colorScheme.secondaryContainer
         ),
         horizontalAlignment = Alignment.CenterHorizontally,
