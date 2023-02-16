@@ -17,9 +17,9 @@
     <string name="replace_character_warning_body">This will override any saved progress on your current character and will reset the deck to unshuffled</string>
     <string name="card_content_description">card: %1$s</string>
     <string name="remaining_cards">remaining: %1$s</string>
-    <string name="no_cards_remaining">no cards remaining</string>
+    <string name="no_cards_remaining">No cards remaining</string>
     <string name="drawn_cards">"drawn: %1$s"</string>
-    <string name="empty_discard">empty discard</string>
+    <string name="empty_discard">Empty discard</string>
     <string name="shuffle">Shuffle</string>
     <string name="draw">Draw</string>
     <string name="needs_reshuffling">Needs Reshuffling!</string>

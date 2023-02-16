@@ -1,9 +1,6 @@
 package com.holden.gloomhavenmodifier.deck.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -231,12 +228,32 @@ fun CardSlot(
     Box(
         modifier = modifier
     ){
-        Text(modifier = Modifier.align(Alignment.Center),
-            text = emptyText,
-            style = MaterialTheme.typography.titleSmall,
-        )
+        Box(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .fillMaxSize(.8f)
+                .border(
+                    width = 2.dp,
+                    color = MaterialTheme.colorScheme.secondary,
+                    shape = MaterialTheme.shapes.large
+                )
+        ) {
+            Text(modifier = Modifier
+                .align(Alignment.Center),
+                text = emptyText,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.secondary,
+                textAlign = TextAlign.Center,
+            )
+        }
+
         if (card != null){
-            Card(card = card, modifier = modifier.align(Alignment.Center))
+            Card(card = card, modifier = Modifier
+                .fillMaxHeight()
+                .aspectRatio(CARD_ASPECT_RATIO)
+                .padding(10.dp)
+                .align(Alignment.Center)
+            )
         }
 
         Text(
