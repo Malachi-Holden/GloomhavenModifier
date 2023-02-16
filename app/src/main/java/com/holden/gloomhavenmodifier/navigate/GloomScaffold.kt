@@ -54,7 +54,7 @@ fun GloomScaffold() {
                     title = {
                         Text(
                             text = currentDestination?.scaffoldTitle(character) ?: "",
-                            style = MaterialTheme.typography.headlineMedium
+                            style = MaterialTheme.typography.displaySmall
                         )
                     },
                     navigationIcon = {
