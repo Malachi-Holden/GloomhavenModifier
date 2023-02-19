@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -23,6 +24,7 @@ import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterState
 import com.holden.gloomhavenmodifier.chooseCharacter.viewModel.CharacterViewModel
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
 import com.holden.gloomhavenmodifier.editCharacter.model.CharacterModel
+import com.holden.gloomhavenmodifier.util.ui.AutoSizeText
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,9 +54,9 @@ fun GloomScaffold() {
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(
+                        AutoSizeText(
                             text = currentDestination?.scaffoldTitle(character) ?: "",
-                            style = MaterialTheme.typography.displaySmall
+                            style = MaterialTheme.typography.headlineLarge,
                         )
                     },
                     navigationIcon = {
