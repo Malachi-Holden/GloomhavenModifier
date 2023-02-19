@@ -59,13 +59,11 @@ class MockCharacterRepo : CharacterRepository {
           "specialtyCards": [
             {
               "description": "rolling pierce 3",
-              "resourceType": "local",
               "imageRes": "rolling_pierce_3",
               "reshuffle": false
             },
             {
               "description": "rolling push 2",
-              "resourceType": "local",
               "imageRes": "rolling_push_2",
               "reshuffle": false
             }

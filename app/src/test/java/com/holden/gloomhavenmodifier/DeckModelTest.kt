@@ -21,7 +21,7 @@ class DeckModelTest {
         deck = deck.draw()
         deck = deck.draw()
         deck = deck.insertCurse()
-        assertCursesIsCorrect(deck, 1, 1, 18, 2)
+        assertCursesIsCorrect(deck, 1, 0, 18, 2)
     }
 
     @Test
