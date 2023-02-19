@@ -21,13 +21,7 @@ class DeckModelTest {
         deck = deck.draw()
         deck = deck.draw()
         deck = deck.insertCurse()
-        assertEquals("there should be one curse in the deck",1,  deck.cards.count { it.isCurse() })
-        assertEquals("there should be one curse in the remaining cards",1,  deck.remainingCards().count { it.isCurse() })
-
-        assertEquals("the curses counter should be 1", 1, deck.curses)
-        assertEquals("the deck should have 1 extra card", 21, deck.cards.size)
-        assertEquals("the remaining should have 1 extra card", 19, deck.remainingCards().size)
-        assertEquals("the drawn should have no extra cards", 2, deck.drawnCards().size)
+        assertCursesIsCorrect(deck, 1, 1, 18, 2)
     }
 
     @Test
@@ -36,14 +30,16 @@ class DeckModelTest {
         deck = deck.draw()
         deck = deck.insertCurse()
         deck = deck.removeCurse()
-        assertEquals("there should be no curses in the deck",0,  deck.cards.count { it.isCurse() })
-        assertEquals("there should be no curses in the remaining cards",0,  deck.remainingCards().count { it.isCurse() })
+        assertCursesIsCorrect(deck, 0, 0, 18, 2) }
 
-        assertEquals("the curses counter should be 0", 0, deck.curses)
-        assertEquals("the deck should have no extra cards", 20, deck.cards.size)
-        assertEquals("the remaining should have no extra cards", 18, deck.remainingCards().size)
-        assertEquals("the drawn should have no extra cards", 2, deck.drawnCards().size)
-    }
+    @Test
+    fun testInsertCurseAndShuffle(){
+        deck = deck.draw()
+        deck = deck.draw()
+        deck = deck.insertCurse()
+        deck = deck.shuffled()
+        assertCursesIsCorrect(deck, 1, 0, 20, 0)
+}
 
     @Test
     fun testDrawCardAt(){
@@ -55,5 +51,22 @@ class DeckModelTest {
                 deck2.mostRecentlyPlayed()
             )
         }
+    }
+
+    fun assertCursesIsCorrect(
+        deck: DeckModel,
+        cursesInDeck: Int,
+        cursesInDiscard: Int,
+        remainingCards: Int,
+        discardedCards: Int
+    ){
+        assertEquals("there should be $cursesInDeck curses in the deck", cursesInDeck,  deck.cards.count { it.isCurse() })
+        assertEquals("there should be $cursesInDeck curses in the remaining cards",cursesInDeck,  deck.remainingCards().count { it.isCurse() })
+
+        assertEquals("the curses counter should be $cursesInDeck", cursesInDeck, deck.curses)
+        assertEquals("the deck should have no extra cards", remainingCards + cursesInDeck + discardedCards + cursesInDiscard, deck.cards.size)
+        assertEquals("the remaining should have no extra cards", remainingCards + cursesInDeck, deck.remainingCards().size)
+        assertEquals("the drawn should have no extra cards", discardedCards + cursesInDiscard, deck.drawnCards().size)
+
     }
 }

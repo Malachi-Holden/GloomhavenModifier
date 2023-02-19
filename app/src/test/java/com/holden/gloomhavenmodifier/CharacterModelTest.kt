@@ -17,13 +17,11 @@ class CharacterModelTest {
             specialtyCards = listOf(
                 CardModel(
                     description = "card 1",
-                    reshuffle = false,
-                    resourceType = "local"
+                    reshuffle = false
                 ),
                 CardModel(
                     description = "card 2",
-                    reshuffle = false,
-                    resourceType = "local"
+                    reshuffle = false
                 )
             ),
             perks = listOf(

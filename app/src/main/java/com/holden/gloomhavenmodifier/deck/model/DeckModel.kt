@@ -63,8 +63,8 @@ data class DeckModel(
             .shuffled(),
         position =0,
         needsShuffle = false,
-        blesses = remainingCards().count { it.isCurse() },
-        curses = remainingCards().count { it.isBless() }
+        blesses = remainingCards().count { it.isBless() },
+        curses = remainingCards().count { it.isCurse() }
     )
 
     fun shuffledRemaining() = copy(
