@@ -11,7 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -40,7 +39,7 @@ fun EditCharacter(onSave: (CharacterModel)->Unit) {
 
     Box {
         Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+            LazyColumn(modifier = Modifier.weight(1.0f).fillMaxWidth()) {
                 items(character.perks) { perk ->
                     PerkCheckRow(
                         perk = perk,
@@ -50,7 +49,7 @@ fun EditCharacter(onSave: (CharacterModel)->Unit) {
                 }
             }
             Button(
-                modifier = Modifier.fillMaxWidth(.65f),
+                modifier = Modifier.padding(10.dp).fillMaxWidth(.65f),
                 onClick = {
                     showSaveConfirmationDialogue = true
                 }) {
