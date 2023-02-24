@@ -6,7 +6,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -20,12 +22,18 @@ import com.holden.gloomhavenmodifier.deck.model.CardModel
 val CARD_ASPECT_RATIO = 408f / 266f
 
 @Composable
-fun Card(modifier: Modifier = Modifier, card: CardModel) {
+fun Card(
+    modifier: Modifier = Modifier,
+    card: CardModel,
+    contentScale: ContentScale = ContentScale.FillWidth,
+    tintColor: Color? = null
+) {
     Image(
         modifier = modifier.clip(MaterialTheme.shapes.medium),
         painter = cardPainter(card = card),
         contentDescription = stringResource(id = R.string.card_content_description, card.description),
-        contentScale = ContentScale.FillWidth
+        contentScale = contentScale,
+        colorFilter = tintColor?.let { ColorFilter.tint(it, BlendMode.Lighten) }
     )
 }
 
