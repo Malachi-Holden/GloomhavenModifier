@@ -28,7 +28,6 @@ import com.holden.gloomhavenmodifier.deck.model.DeckModel
 import com.holden.gloomhavenmodifier.deck.viewModel.DeckViewModel
 import com.holden.gloomhavenmodifier.util.ui.ClosableOverlay
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Deck() {
     val deckViewModel: DeckViewModel = hiltViewModel(LocalComponentActivity.current)
@@ -50,25 +49,13 @@ fun Deck() {
                 .padding(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val cardModifier = Modifier
-                .weight(1f, fill = false)
-                .fillMaxHeight()
-                .aspectRatio(CARD_ASPECT_RATIO)
-                .padding(10.dp)
-            CardSlot(
-                modifier = cardModifier.combinedClickable(
-                    onClick = {},
-                    onLongClick = { showRevealDeckWarning = true }
-                ),
-                card = if (deck.remaining() > 0) BaseCard.BackOfCard.card else null,
-                numCards = deck.remaining(),
-                emptyText = stringResource(R.string.no_cards_remaining)
-            )
-            CardSlot(
-                modifier = cardModifier.clickable { showCardHistory = true  },
-                card = deck.mostRecentlyPlayed(),
-                numCards = deck.drawn(),
-                emptyText = stringResource(R.string.empty_discard)
+            AnimatedDeck(
+                modifier = Modifier.weight(1f).fillMaxHeight(),
+                revealedCard = deck.mostRecentlyPlayed(),
+                remainingCards = deck.remaining(),
+                drawnCards = deck.drawn(),
+                onRemainingLongTapped = { showRevealDeckWarning = true },
+                onDrawnTapped = { showCardHistory = true }
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -218,60 +205,6 @@ fun DeckRevealConfirmationDialogue(visible: Boolean, modifier: Modifier = Modifi
 
 }
 
-@Composable
-fun CardSlot(
-    modifier: Modifier = Modifier,
-    emptyText: String,
-    card: CardModel?,
-    numCards: Int
-){
-    Box(
-        modifier = modifier
-    ){
-        Box(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .fillMaxSize(.8f)
-                .border(
-                    width = 2.dp,
-                    color = MaterialTheme.colorScheme.secondary,
-                    shape = MaterialTheme.shapes.large
-                )
-        ) {
-            Text(modifier = Modifier
-                .align(Alignment.Center),
-                text = emptyText,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.secondary,
-                textAlign = TextAlign.Center,
-            )
-        }
-
-        if (card != null){
-            Card(card = card, modifier = Modifier
-                .fillMaxHeight()
-                .aspectRatio(CARD_ASPECT_RATIO)
-                .padding(10.dp)
-                .align(Alignment.Center)
-            )
-        }
-
-        Text(
-            modifier = Modifier
-                .padding(5.dp)
-                .align(Alignment.BottomEnd)
-                .background(
-                    color = MaterialTheme.colorScheme.primaryContainer,
-                    shape = MaterialTheme.shapes.extraSmall
-                )
-                .defaultMinSize(minWidth = 25.dp)
-                .padding(5.dp),
-            style = MaterialTheme.typography.labelSmall,
-            textAlign = TextAlign.Center,
-            text = "$numCards"
-        )
-    }
-}
 
 @Preview
 @Composable
